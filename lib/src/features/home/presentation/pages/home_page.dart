@@ -3,6 +3,8 @@ import 'package:audiotexter/src/features/home/presentation/pages/home_page_views
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../../../core/utils/theme_utils.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -34,7 +36,7 @@ class HomePage extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: Colors.grey.shade100,
+            color: ThemeUtils.borderColor,
           ),
         ),
         child: InkWell(
@@ -54,7 +56,7 @@ class HomePage extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: Colors.grey.shade100,
+            color: ThemeUtils.borderColor,
           ),
         ),
       ),
