@@ -60,19 +60,15 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      child: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20, bottom: 12),
         child: GNav(
           gap: 10,
           onTabChange: (int index) {},
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           tabs: const [
-            GButton(
-              icon: Icons.list,
-              text: 'My Records',
-            ),
-            GButton(
-              icon: Icons.delete_forever,
-              text: 'Deleted',
-            ),
+            GButton(icon: Icons.list, text: 'My Records'),
+            GButton(icon: Icons.delete_forever, text: 'Deleted'),
           ],
         ),
       ),
