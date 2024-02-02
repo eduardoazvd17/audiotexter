@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
               onTabChange: controller.changePage,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               tabs: HomeViewsEnum.values.map((page) {
-                return GButton(icon: page.icon, text: page.title);
+                return GButton(icon: page.icon, text: page.title(context));
               }).toList(),
             ),
           ),

@@ -11,7 +11,7 @@ class DeletedRecordsView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Text(
-          HomeViewsEnum.deletedRecords.title,
+          HomeViewsEnum.deletedRecords.title(context),
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),

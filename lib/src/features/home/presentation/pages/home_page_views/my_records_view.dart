@@ -10,7 +10,7 @@ class MyRecordsView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Text(
-          HomeViewsEnum.myRecords.title,
+          HomeViewsEnum.myRecords.title(context),
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
