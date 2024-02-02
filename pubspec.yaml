@@ -39,6 +39,7 @@ dependencies:
   just_audio: ^0.9.36
   speech_to_text: ^6.6.0
   text_to_speech: ^0.2.3
+  google_nav_bar: ^5.0.6
 
 dev_dependencies:
   flutter_test:
