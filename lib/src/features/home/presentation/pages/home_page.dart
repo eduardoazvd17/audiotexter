@@ -1,12 +1,16 @@
+import 'package:audiotexter/src/features/home/data/enums/home_views_enum.dart';
+import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
 import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/deleted_view.dart';
 import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/my_records_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../../core/utils/theme_utils.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final HomeController controller;
+  const HomePage({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +24,16 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _pageViewWidget() {
-    return PageView(
-      children: const [
-        MyRecordsView(),
-        DeletedView(),
-      ],
-    );
+    return Observer(builder: (context) {
+      return PageView(
+        controller: controller.pageViewController,
+        onPageChanged: controller.changePage,
+        children: const [
+          MyRecordsView(),
+          DeletedView(),
+        ],
+      );
+    });
   }
 
   Widget _floatingActionButtonWidget() {
@@ -52,26 +60,30 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _navigationBarWidget() {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: ThemeUtils.borderColor,
+    return Observer(
+      builder: (context) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: ThemeUtils.borderColor,
+              ),
+            ),
           ),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20, bottom: 12),
-        child: GNav(
-          gap: 10,
-          onTabChange: (int index) {},
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          tabs: const [
-            GButton(icon: Icons.list, text: 'My Records'),
-            GButton(icon: Icons.delete_forever, text: 'Deleted'),
-          ],
-        ),
-      ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 12),
+            child: GNav(
+              gap: 10,
+              selectedIndex: controller.currentPage.index,
+              onTabChange: controller.changePage,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              tabs: HomeViewsEnum.values.map((page) {
+                return GButton(icon: page.icon, text: page.title);
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'src/core/utils/theme_utils.dart';
 import 'src/features/home/presentation/pages/home_page.dart';
@@ -17,7 +18,7 @@ class AudioTexterApp extends StatelessWidget {
       darkTheme: ThemeUtils.darkTheme,
       initialRoute: '/',
       routes: {
-        '/': (_) => const HomePage(),
+        '/': (_) => HomePage(controller: HomeController()),
       },
     );
   }

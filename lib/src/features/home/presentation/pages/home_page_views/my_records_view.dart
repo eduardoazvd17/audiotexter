@@ -1,3 +1,4 @@
+import 'package:audiotexter/src/features/home/data/enums/home_views_enum.dart';
 import 'package:flutter/material.dart';
 
 class MyRecordsView extends StatelessWidget {
@@ -8,7 +9,10 @@ class MyRecordsView extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Text('My Records'),
+        child: Text(
+          HomeViewsEnum.myRecords.title,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
     );
   }

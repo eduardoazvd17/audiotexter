@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/enums/home_views_enum.dart';
+
 class DeletedView extends StatelessWidget {
   const DeletedView({super.key});
 
@@ -8,7 +10,10 @@ class DeletedView extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Text('Deleted Records'),
+        child: Text(
+          HomeViewsEnum.deletedRecords.title,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
     );
   }
