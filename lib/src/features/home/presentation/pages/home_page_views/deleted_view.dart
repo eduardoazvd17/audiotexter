@@ -6,7 +6,10 @@ class DeletedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('Deleted Records'),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text('Deleted Records'),
+      ),
     );
   }
 }

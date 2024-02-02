@@ -6,7 +6,10 @@ class MyRecordsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('My Records'),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text('My Records'),
+      ),
     );
   }
 }
