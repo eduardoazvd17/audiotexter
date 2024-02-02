@@ -1,6 +1,6 @@
 import 'package:audiotexter/src/features/home/data/enums/home_views_enum.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
-import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/deleted_view.dart';
+import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/deleted_records_view.dart';
 import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/my_records_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
         onPageChanged: controller.changePage,
         children: const [
           MyRecordsView(),
-          DeletedView(),
+          DeletedRecordsView(),
         ],
       );
     });

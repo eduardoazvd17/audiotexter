@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../data/enums/home_views_enum.dart';
 
-class DeletedView extends StatelessWidget {
-  const DeletedView({super.key});
+class DeletedRecordsView extends StatelessWidget {
+  const DeletedRecordsView({super.key});
 
   @override
   Widget build(BuildContext context) {
