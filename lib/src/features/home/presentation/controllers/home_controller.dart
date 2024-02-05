@@ -38,6 +38,7 @@ abstract class HomeControllerBase with Store {
     );
   }
 
+  @computed
   bool get hasPermission => _recordingController.hasPermission;
 
   @observable
@@ -46,13 +47,19 @@ abstract class HomeControllerBase with Store {
   @observable
   List<RecordModel> deletedRecords = [];
 
+  @action
   Future<void> _loadRecordings() async {}
+  @action
   Future<void> record(BuildContext context) async {
     _recordingController;
   }
 
+  @action
   void openRecord(RecordModel recordModel) {}
+  @action
   void deleteRecord(RecordModel recordModel) {}
+  @action
   void permanentDeleteRecord(RecordModel recordModel) {}
+  @action
   void permanentDeleteAllRecords(BuildContext context) {}
 }

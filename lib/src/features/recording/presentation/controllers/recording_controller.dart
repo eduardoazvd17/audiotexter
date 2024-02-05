@@ -14,12 +14,18 @@ abstract class RecordingControllerBase with Store {
 
   @observable
   bool hasPermission = false;
+
+  @action
   Future<void> _checkPermissions() async {
     hasPermission = await _recorder.hasPermission();
   }
 
+  @action
   Future<void> startRecord() async {}
+  @action
   Future<void> pauseRecord() async {}
+  @action
   Future<void> resumeRecord() async {}
+  @action
   Future<String> stopRecord() async => "";
 }
