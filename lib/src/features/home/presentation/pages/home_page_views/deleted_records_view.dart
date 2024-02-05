@@ -46,7 +46,7 @@ class DeletedRecordsView extends StatelessWidget {
               return ListView.builder(
                 itemCount: controller.deletedRecords.length,
                 itemBuilder: (context, index) {
-                  final recordModel = controller.myRecords[index];
+                  final recordModel = controller.deletedRecords[index];
                   return Opacity(
                     opacity: 0.5,
                     child: RecordTileWidget(

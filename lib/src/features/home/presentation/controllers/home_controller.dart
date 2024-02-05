@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -41,23 +43,47 @@ abstract class HomeControllerBase with Store {
   bool get hasPermission => recordingController.hasPermission;
 
   @observable
-  List<RecordModel> myRecords = [];
+  ObservableList<RecordModel> myRecords = ObservableList<RecordModel>();
 
   @observable
-  List<RecordModel> deletedRecords = [];
+  ObservableList<RecordModel> deletedRecords = ObservableList<RecordModel>();
 
   @action
-  Future<void> _loadRecordings() async {}
+  Future<void> _loadRecordings() async {
+    // load all saved data.
+  }
+
+  @action
+  void addRecord(String audioPath) {
+    myRecords.add(
+      RecordModel(
+        title: 'New recording (${myRecords.length + 1})',
+        date: DateTime.now(),
+        path: audioPath,
+      ),
+    );
+  }
 
   @action
   void openRecord(RecordModel recordModel) {}
 
   @action
-  void deleteRecord(RecordModel recordModel) {}
+  void deleteRecord(RecordModel recordModel) {
+    myRecords.remove(recordModel);
+    deletedRecords.add(recordModel);
+  }
 
   @action
-  void permanentDeleteRecord(RecordModel recordModel) {}
+  Future<void> permanentDeleteRecord(RecordModel recordModel) async {
+    await File(recordModel.path).delete();
+    deletedRecords.remove(recordModel);
+  }
 
   @action
-  void permanentDeleteAllRecords() {}
+  Future<void> permanentDeleteAllRecords() async {
+    for (final RecordModel recordModel in deletedRecords) {
+      await File(recordModel.path).delete();
+    }
+    deletedRecords.clear();
+  }
 }

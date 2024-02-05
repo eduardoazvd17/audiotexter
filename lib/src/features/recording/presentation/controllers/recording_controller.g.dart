@@ -9,6 +9,21 @@ part of 'recording_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RecordingController on RecordingControllerBase, Store {
+  Computed<Duration>? _$durationComputed;
+
+  @override
+  Duration get duration =>
+      (_$durationComputed ??= Computed<Duration>(() => super.duration,
+              name: 'RecordingControllerBase.duration'))
+          .value;
+  Computed<String>? _$timerStringComputed;
+
+  @override
+  String get timerString =>
+      (_$timerStringComputed ??= Computed<String>(() => super.timerString,
+              name: 'RecordingControllerBase.timerString'))
+          .value;
+
   late final _$hasPermissionAtom =
       Atom(name: 'RecordingControllerBase.hasPermission', context: context);
 
@@ -57,34 +72,34 @@ mixin _$RecordingController on RecordingControllerBase, Store {
     });
   }
 
-  late final _$timerAtom =
-      Atom(name: 'RecordingControllerBase.timer', context: context);
+  late final _$_timerAtom =
+      Atom(name: 'RecordingControllerBase._timer', context: context);
 
   @override
   Timer? get _timer {
-    _$timerAtom.reportRead();
+    _$_timerAtom.reportRead();
     return super._timer;
   }
 
   @override
   set _timer(Timer? value) {
-    _$timerAtom.reportWrite(value, super._timer, () {
+    _$_timerAtom.reportWrite(value, super._timer, () {
       super._timer = value;
     });
   }
 
-  late final _$recordTimeAtom =
-      Atom(name: 'RecordingControllerBase.recordTime', context: context);
+  late final _$_durationInSecondsAtom = Atom(
+      name: 'RecordingControllerBase._durationInSeconds', context: context);
 
   @override
   int get _durationInSeconds {
-    _$recordTimeAtom.reportRead();
+    _$_durationInSecondsAtom.reportRead();
     return super._durationInSeconds;
   }
 
   @override
   set _durationInSeconds(int value) {
-    _$recordTimeAtom.reportWrite(value, super._durationInSeconds, () {
+    _$_durationInSecondsAtom.reportWrite(value, super._durationInSeconds, () {
       super._durationInSeconds = value;
     });
   }
@@ -146,8 +161,8 @@ mixin _$RecordingController on RecordingControllerBase, Store {
 hasPermission: ${hasPermission},
 isRecording: ${isRecording},
 isPaused: ${isPaused},
-timer: ${_timer},
-recordTime: ${_durationInSeconds}
+duration: ${duration},
+timerString: ${timerString}
     ''';
   }
 }

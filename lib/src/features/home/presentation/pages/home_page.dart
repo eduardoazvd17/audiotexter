@@ -28,7 +28,9 @@ class HomePage extends StatelessWidget {
             );
           },
         );
-        print("audioPath: $audioPath");
+        if (audioPath != null && audioPath.isNotEmpty) {
+          controller.addRecord(audioPath);
+        }
       case HomeViewsEnum.deletedRecords:
         // Show confirmation dialog.
         controller.permanentDeleteAllRecords();
