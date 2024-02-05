@@ -38,50 +38,52 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _floatingActionButtonWidget(BuildContext context) {
-    return Material(
-      elevation: 5,
-      color: Colors.red,
-      borderRadius: BorderRadius.circular(100),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: ThemeUtils.borderColor,
-          ),
-        ),
-        child: InkWell(
-          onTap: () {
-            switch (controller.currentPage) {
-              case HomeViewsEnum.myRecords:
-                controller.record(context);
-              case HomeViewsEnum.deletedRecords:
-                controller.permanentDeleteAllRecords(context);
-            }
+    return Observer(
+      builder: (_) {
+        return Material(
+          elevation: 5,
+          color: switch (controller.currentPage) {
+            HomeViewsEnum.myRecords => Colors.red,
+            HomeViewsEnum.deletedRecords =>
+              controller.deletedRecords.isEmpty ? Colors.grey : Colors.red,
           },
           borderRadius: BorderRadius.circular(100),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Observer(
-              builder: (_) {
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: ThemeUtils.borderColor,
+              ),
+            ),
+            child: InkWell(
+              onTap: () {
                 switch (controller.currentPage) {
                   case HomeViewsEnum.myRecords:
-                    return Icon(
+                    controller.record(context);
+                  case HomeViewsEnum.deletedRecords:
+                    controller.permanentDeleteAllRecords(context);
+                }
+              },
+              borderRadius: BorderRadius.circular(100),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: switch (controller.currentPage) {
+                  HomeViewsEnum.myRecords => Icon(
                       Icons.mic,
                       size: 30,
                       color: ThemeUtils.borderColor,
-                    ).animate().fade();
-                  case HomeViewsEnum.deletedRecords:
-                    return Icon(
+                    ).animate().fade(),
+                  HomeViewsEnum.deletedRecords => Icon(
                       Icons.delete_forever,
                       size: 30,
                       color: ThemeUtils.borderColor,
-                    ).animate().fade();
-                }
-              },
+                    ).animate().fade(),
+                },
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
