@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../audio/data/models/record_model.dart';
+import '../../../../core/models/record_model.dart';
 
 class RecordTileWidget extends StatelessWidget {
   final RecordModel recordModel;

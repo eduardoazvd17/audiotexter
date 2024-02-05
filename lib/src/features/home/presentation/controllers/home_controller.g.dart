@@ -25,10 +25,43 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
+  late final _$myRecordsAtom =
+      Atom(name: 'HomeControllerBase.myRecords', context: context);
+
+  @override
+  List<RecordModel> get myRecords {
+    _$myRecordsAtom.reportRead();
+    return super.myRecords;
+  }
+
+  @override
+  set myRecords(List<RecordModel> value) {
+    _$myRecordsAtom.reportWrite(value, super.myRecords, () {
+      super.myRecords = value;
+    });
+  }
+
+  late final _$deletedRecordsAtom =
+      Atom(name: 'HomeControllerBase.deletedRecords', context: context);
+
+  @override
+  List<RecordModel> get deletedRecords {
+    _$deletedRecordsAtom.reportRead();
+    return super.deletedRecords;
+  }
+
+  @override
+  set deletedRecords(List<RecordModel> value) {
+    _$deletedRecordsAtom.reportWrite(value, super.deletedRecords, () {
+      super.deletedRecords = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-
+myRecords: ${myRecords},
+deletedRecords: ${deletedRecords}
     ''';
   }
 }
