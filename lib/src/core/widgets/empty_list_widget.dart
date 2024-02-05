@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class EmptyListWidget extends StatelessWidget {
   final IconData icon;
@@ -18,12 +19,12 @@ class EmptyListWidget extends StatelessWidget {
               icon,
               color: Theme.of(context).primaryColor,
             ),
-          ),
+          ).animate().fade().slideY(),
           Text(
             message,
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.bold),
-          )
+          ).animate().fade().slideX(),
         ],
       ),
     );
