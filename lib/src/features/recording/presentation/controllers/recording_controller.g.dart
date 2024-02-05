@@ -25,6 +25,70 @@ mixin _$RecordingController on RecordingControllerBase, Store {
     });
   }
 
+  late final _$isRecordingAtom =
+      Atom(name: 'RecordingControllerBase.isRecording', context: context);
+
+  @override
+  bool get isRecording {
+    _$isRecordingAtom.reportRead();
+    return super.isRecording;
+  }
+
+  @override
+  set isRecording(bool value) {
+    _$isRecordingAtom.reportWrite(value, super.isRecording, () {
+      super.isRecording = value;
+    });
+  }
+
+  late final _$isPausedAtom =
+      Atom(name: 'RecordingControllerBase.isPaused', context: context);
+
+  @override
+  bool get isPaused {
+    _$isPausedAtom.reportRead();
+    return super.isPaused;
+  }
+
+  @override
+  set isPaused(bool value) {
+    _$isPausedAtom.reportWrite(value, super.isPaused, () {
+      super.isPaused = value;
+    });
+  }
+
+  late final _$timerAtom =
+      Atom(name: 'RecordingControllerBase.timer', context: context);
+
+  @override
+  Timer? get timer {
+    _$timerAtom.reportRead();
+    return super.timer;
+  }
+
+  @override
+  set timer(Timer? value) {
+    _$timerAtom.reportWrite(value, super.timer, () {
+      super.timer = value;
+    });
+  }
+
+  late final _$recordTimeAtom =
+      Atom(name: 'RecordingControllerBase.recordTime', context: context);
+
+  @override
+  int get recordTime {
+    _$recordTimeAtom.reportRead();
+    return super.recordTime;
+  }
+
+  @override
+  set recordTime(int value) {
+    _$recordTimeAtom.reportWrite(value, super.recordTime, () {
+      super.recordTime = value;
+    });
+  }
+
   late final _$_checkPermissionsAsyncAction = AsyncAction(
       'RecordingControllerBase._checkPermissions',
       context: context);
@@ -32,6 +96,16 @@ mixin _$RecordingController on RecordingControllerBase, Store {
   @override
   Future<void> _checkPermissions() {
     return _$_checkPermissionsAsyncAction.run(() => super._checkPermissions());
+  }
+
+  late final _$_loadAudiosDirectoryPathAsyncAction = AsyncAction(
+      'RecordingControllerBase._loadAudiosDirectoryPath',
+      context: context);
+
+  @override
+  Future<void> _loadAudiosDirectoryPath() {
+    return _$_loadAudiosDirectoryPathAsyncAction
+        .run(() => super._loadAudiosDirectoryPath());
   }
 
   late final _$startRecordAsyncAction =
@@ -62,14 +136,18 @@ mixin _$RecordingController on RecordingControllerBase, Store {
       AsyncAction('RecordingControllerBase.stopRecord', context: context);
 
   @override
-  Future<String> stopRecord() {
+  Future<String?> stopRecord() {
     return _$stopRecordAsyncAction.run(() => super.stopRecord());
   }
 
   @override
   String toString() {
     return '''
-hasPermission: ${hasPermission}
+hasPermission: ${hasPermission},
+isRecording: ${isRecording},
+isPaused: ${isPaused},
+timer: ${timer},
+recordTime: ${recordTime}
     ''';
   }
 }
