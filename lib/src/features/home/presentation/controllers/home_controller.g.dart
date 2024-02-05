@@ -33,22 +33,6 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
-  late final _$errorAtom =
-      Atom(name: 'HomeControllerBase.error', context: context);
-
-  @override
-  String? get error {
-    _$errorAtom.reportRead();
-    return super.error;
-  }
-
-  @override
-  set error(String? value) {
-    _$errorAtom.reportWrite(value, super.error, () {
-      super.error = value;
-    });
-  }
-
   late final _$_currentPageAtom =
       Atom(name: 'HomeControllerBase._currentPage', context: context);
 
@@ -172,7 +156,6 @@ mixin _$HomeController on HomeControllerBase, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
-error: ${error},
 myRecords: ${myRecords},
 deletedRecords: ${deletedRecords},
 hasPermission: ${hasPermission}

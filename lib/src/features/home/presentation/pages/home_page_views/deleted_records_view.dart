@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -25,6 +26,20 @@ class DeletedRecordsView extends StatelessWidget {
           ),
           Expanded(
             child: Observer(builder: (context) {
+              if (controller.isLoading) {
+                return const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CupertinoActivityIndicator(),
+                      ],
+                    ),
+                  ],
+                );
+              }
+
               if (controller.deletedRecords.isEmpty) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
