@@ -8,6 +8,7 @@ import 'package:audiotexter/src/core/models/record_model.dart';
 import 'package:audiotexter/src/features/recording/presentation/controllers/recording_controller.dart';
 
 import '../../data/enums/home_views_enum.dart';
+import '../../data/services/home_service.dart';
 
 part 'home_controller.g.dart';
 
@@ -16,8 +17,13 @@ class HomeController = HomeControllerBase with _$HomeController;
 abstract class HomeControllerBase with Store {
   final RecordingController recordingController;
   late final PageController pageViewController;
+  late final HomeService _service;
 
-  HomeControllerBase({required this.recordingController}) {
+  HomeControllerBase({
+    required this.recordingController,
+    required HomeService service,
+  }) {
+    _service = service;
     pageViewController = PageController();
     _loadRecordings();
   }
@@ -51,7 +57,12 @@ abstract class HomeControllerBase with Store {
 
   @action
   Future<void> _loadRecordings() async {
-    // load all saved data.
+    try {
+      myRecords.addAll(await _service.loadMyRecords());
+      deletedRecords.addAll(await _service.loadDeletedRecords());
+    } catch (_) {
+      error = "?"; //ERROR MESSAGE
+    }
   }
 
   @action
@@ -63,6 +74,7 @@ abstract class HomeControllerBase with Store {
         path: audioPath,
       ),
     );
+    _service.saveMyRecords(myRecords);
   }
 
   @action
@@ -77,18 +89,25 @@ abstract class HomeControllerBase with Store {
   void deleteRecord(RecordModel recordModel) {
     myRecords.remove(recordModel);
     deletedRecords.add(recordModel);
+
+    _service.saveMyRecords(myRecords);
+    _service.saveDeletedRecords(deletedRecords);
   }
 
   @action
   void restoreRecord(RecordModel recordModel) {
     deletedRecords.remove(recordModel);
     myRecords.add(recordModel);
+
+    _service.saveDeletedRecords(deletedRecords);
+    _service.saveMyRecords(myRecords);
   }
 
   @action
   Future<void> permanentDeleteRecord(RecordModel recordModel) async {
     await File(recordModel.path).delete();
     deletedRecords.remove(recordModel);
+    await _service.saveDeletedRecords(deletedRecords);
   }
 
   @action
@@ -97,5 +116,6 @@ abstract class HomeControllerBase with Store {
       await File(recordModel.path).delete();
     }
     deletedRecords.clear();
+    await _service.saveDeletedRecords(deletedRecords);
   }
 }

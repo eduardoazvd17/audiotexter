@@ -48,6 +48,8 @@ dependencies:
   flutter_animate: ^4.5.0
   get_it: ^7.6.7
   path_provider: ^2.1.2
+  equatable: ^2.0.5
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
