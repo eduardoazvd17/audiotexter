@@ -9,9 +9,17 @@ import 'src/features/l10n/l10n.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  GetIt.I.registerLazySingleton(() => HomeController());
-  GetIt.I.registerSingleton(RecordingController());
+  _loadDependencies();
   runApp(const AudioTexterApp());
+}
+
+void _loadDependencies() {
+  GetIt.I.registerSingleton(RecordingController());
+  GetIt.I.registerLazySingleton(
+    () => HomeController(
+      recordingController: GetIt.I.get<RecordingController>(),
+    ),
+  );
 }
 
 class AudioTexterApp extends StatelessWidget {

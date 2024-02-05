@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:audiotexter/src/core/models/record_model.dart';
@@ -14,9 +13,10 @@ class HomeController = HomeControllerBase with _$HomeController;
 abstract class HomeControllerBase with Store {
   late final PageController pageViewController;
   late final RecordingController _recordingController;
-  HomeControllerBase() {
+
+  HomeControllerBase({required RecordingController recordingController}) {
+    _recordingController = recordingController;
     pageViewController = PageController();
-    _recordingController = GetIt.I.get<RecordingController>();
     _loadRecordings();
   }
 
