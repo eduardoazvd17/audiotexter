@@ -1,9 +1,11 @@
 import 'package:audiotexter/src/core/utils/localization_utils.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
+import 'package:audiotexter/src/features/recording/presentation/pages/recording_page.dart';
 import 'package:flutter/material.dart';
 import 'src/core/utils/theme_utils.dart';
 import 'src/features/home/presentation/pages/home_page.dart';
 import 'src/features/l10n/l10n.dart';
+import 'src/features/recording/presentation/controllers/recording_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,7 @@ class AudioTexterApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (_) => HomePage(controller: HomeController()),
+        '/recording': (_) => RecordingPage(controller: RecordingController()),
       },
     );
   }
