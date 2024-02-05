@@ -1,5 +1,7 @@
 {
     "appName": "AudioTexter",
     "myRecords": "My Records",
-    "deletedRecords": "Deleted Records"
+    "deletedRecords": "Deleted Records",
+    "myRecordsEmptyMessage": "No recordings found",
+    "deletedRecordsEmptyMessage": "No deleted recordings"
 }
