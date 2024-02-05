@@ -32,9 +32,6 @@ abstract class HomeControllerBase with Store {
   bool isLoading = false;
 
   @observable
-  String? error;
-
-  @observable
   HomeViewsEnum _currentPage = HomeViewsEnum.values.first;
   HomeViewsEnum get currentPage => _currentPage;
   void changePage(int index) {
@@ -57,12 +54,12 @@ abstract class HomeControllerBase with Store {
 
   @action
   Future<void> _loadRecordings() async {
+    isLoading = true;
     try {
       myRecords.addAll(await _service.loadMyRecords());
       deletedRecords.addAll(await _service.loadDeletedRecords());
-    } catch (_) {
-      error = "?"; //ERROR MESSAGE
-    }
+    } catch (_) {}
+    isLoading = false;
   }
 
   @action

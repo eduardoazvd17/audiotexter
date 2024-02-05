@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,6 +34,17 @@ class HomeService {
           return RecordModel.fromMap(Map<String, dynamic>.from(jsonDecode(e)));
         }).toList() ??
         [];
+
+    final resultCopy = List<RecordModel>.from(result);
+    for (final record in resultCopy) {
+      final file = File(record.path);
+      final bool exists = await file.exists();
+      if (!exists) result.remove(record);
+    }
+    if (resultCopy.length != result.length) {
+      await saveMyRecords(result);
+    }
+
     return result;
   }
 
@@ -43,6 +55,17 @@ class HomeService {
           return RecordModel.fromMap(Map<String, dynamic>.from(jsonDecode(e)));
         }).toList() ??
         [];
+
+    final resultCopy = List<RecordModel>.from(result);
+    for (final record in resultCopy) {
+      final file = File(record.path);
+      final bool exists = await file.exists();
+      if (!exists) result.remove(record);
+    }
+    if (resultCopy.length != result.length) {
+      await saveDeletedRecords(result);
+    }
+
     return result;
   }
 }
