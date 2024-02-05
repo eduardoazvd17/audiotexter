@@ -1,3 +1,4 @@
+import 'package:audiotexter/src/features/audio/data/models/record_model.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -20,4 +21,14 @@ abstract class HomeControllerBase with Store {
       curve: Curves.ease,
     );
   }
+
+  @observable
+  final List<RecordModel> myRecords = [];
+
+  @observable
+  final List<RecordModel> deletedRecords = [];
+
+  void openRecord(RecordModel recordModel) {}
+  void deleteRecord(RecordModel recordModel) {}
+  void permanentDeleteRecord(RecordModel recordModel) {}
 }

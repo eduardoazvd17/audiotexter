@@ -28,9 +28,9 @@ class HomePage extends StatelessWidget {
       return PageView(
         controller: controller.pageViewController,
         onPageChanged: controller.changePage,
-        children: const [
-          MyRecordsView(),
-          DeletedRecordsView(),
+        children: [
+          MyRecordsView(controller: controller),
+          DeletedRecordsView(controller: controller),
         ],
       );
     });
