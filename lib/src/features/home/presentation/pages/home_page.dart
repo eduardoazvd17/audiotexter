@@ -43,7 +43,8 @@ class HomePage extends StatelessWidget {
         return Material(
           elevation: 5,
           color: switch (controller.currentPage) {
-            HomeViewsEnum.myRecords => Colors.red,
+            HomeViewsEnum.myRecords =>
+              controller.hasPermission ? Colors.red : Colors.grey,
             HomeViewsEnum.deletedRecords =>
               controller.deletedRecords.isEmpty ? Colors.grey : Colors.red,
           },

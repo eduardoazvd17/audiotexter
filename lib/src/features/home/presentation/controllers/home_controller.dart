@@ -38,6 +38,8 @@ abstract class HomeControllerBase with Store {
     );
   }
 
+  bool get hasPermission => _recordingController.hasPermission;
+
   @observable
   List<RecordModel> myRecords = [];
 
