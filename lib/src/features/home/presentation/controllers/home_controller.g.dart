@@ -105,6 +105,14 @@ mixin _$HomeController on HomeControllerBase, Store {
     return _$_loadRecordingsAsyncAction.run(() => super._loadRecordings());
   }
 
+  late final _$openRecordAsyncAction =
+      AsyncAction('HomeControllerBase.openRecord', context: context);
+
+  @override
+  Future<void> openRecord(RecordModel recordModel) {
+    return _$openRecordAsyncAction.run(() => super.openRecord(recordModel));
+  }
+
   late final _$permanentDeleteRecordAsyncAction =
       AsyncAction('HomeControllerBase.permanentDeleteRecord', context: context);
 
@@ -139,22 +147,22 @@ mixin _$HomeController on HomeControllerBase, Store {
   }
 
   @override
-  void openRecord(RecordModel recordModel) {
+  void deleteRecord(RecordModel recordModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.openRecord');
+        name: 'HomeControllerBase.deleteRecord');
     try {
-      return super.openRecord(recordModel);
+      return super.deleteRecord(recordModel);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void deleteRecord(RecordModel recordModel) {
+  void restoreRecord(RecordModel recordModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.deleteRecord');
+        name: 'HomeControllerBase.restoreRecord');
     try {
-      return super.deleteRecord(recordModel);
+      return super.restoreRecord(recordModel);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }

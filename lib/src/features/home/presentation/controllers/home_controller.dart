@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:audiotexter/src/core/models/record_model.dart';
@@ -65,7 +66,12 @@ abstract class HomeControllerBase with Store {
   }
 
   @action
-  void openRecord(RecordModel recordModel) {}
+  Future<void> openRecord(RecordModel recordModel) async {
+    //! TEMP
+    final player = AudioPlayer();
+    await player.setFilePath(recordModel.path);
+    await player.play();
+  }
 
   @action
   void deleteRecord(RecordModel recordModel) {
