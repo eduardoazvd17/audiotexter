@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 
-class RecordModel extends Equatable {
+class RecordingModel extends Equatable {
   final String title;
   final DateTime date;
   final String path;
@@ -10,14 +10,14 @@ class RecordModel extends Equatable {
   String get formattedDate => date.toString();
   File get file => File(path);
 
-  const RecordModel({
+  const RecordingModel({
     required this.title,
     required this.date,
     required this.path,
   });
 
-  factory RecordModel.fromMap(Map<String, dynamic> map) {
-    return RecordModel(
+  factory RecordingModel.fromMap(Map<String, dynamic> map) {
+    return RecordingModel(
       title: map['title'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       path: map['path'],

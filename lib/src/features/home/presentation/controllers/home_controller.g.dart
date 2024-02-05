@@ -49,35 +49,35 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
-  late final _$myRecordsAtom =
-      Atom(name: 'HomeControllerBase.myRecords', context: context);
+  late final _$myRecordingsAtom =
+      Atom(name: 'HomeControllerBase.myRecordings', context: context);
 
   @override
-  ObservableList<RecordModel> get myRecords {
-    _$myRecordsAtom.reportRead();
-    return super.myRecords;
+  ObservableList<RecordingModel> get myRecordings {
+    _$myRecordingsAtom.reportRead();
+    return super.myRecordings;
   }
 
   @override
-  set myRecords(ObservableList<RecordModel> value) {
-    _$myRecordsAtom.reportWrite(value, super.myRecords, () {
-      super.myRecords = value;
+  set myRecordings(ObservableList<RecordingModel> value) {
+    _$myRecordingsAtom.reportWrite(value, super.myRecordings, () {
+      super.myRecordings = value;
     });
   }
 
-  late final _$deletedRecordsAtom =
-      Atom(name: 'HomeControllerBase.deletedRecords', context: context);
+  late final _$deletedRecordingsAtom =
+      Atom(name: 'HomeControllerBase.deletedRecordings', context: context);
 
   @override
-  ObservableList<RecordModel> get deletedRecords {
-    _$deletedRecordsAtom.reportRead();
-    return super.deletedRecords;
+  ObservableList<RecordingModel> get deletedRecordings {
+    _$deletedRecordingsAtom.reportRead();
+    return super.deletedRecordings;
   }
 
   @override
-  set deletedRecords(ObservableList<RecordModel> value) {
-    _$deletedRecordsAtom.reportWrite(value, super.deletedRecords, () {
-      super.deletedRecords = value;
+  set deletedRecordings(ObservableList<RecordingModel> value) {
+    _$deletedRecordingsAtom.reportWrite(value, super.deletedRecordings, () {
+      super.deletedRecordings = value;
     });
   }
 
@@ -89,64 +89,66 @@ mixin _$HomeController on HomeControllerBase, Store {
     return _$_loadRecordingsAsyncAction.run(() => super._loadRecordings());
   }
 
-  late final _$openRecordAsyncAction =
-      AsyncAction('HomeControllerBase.openRecord', context: context);
+  late final _$openRecordingAsyncAction =
+      AsyncAction('HomeControllerBase.openRecording', context: context);
 
   @override
-  Future<void> openRecord(RecordModel recordModel) {
-    return _$openRecordAsyncAction.run(() => super.openRecord(recordModel));
+  Future<void> openRecording(RecordingModel recordingModel) {
+    return _$openRecordingAsyncAction
+        .run(() => super.openRecording(recordingModel));
   }
 
-  late final _$permanentDeleteRecordAsyncAction =
-      AsyncAction('HomeControllerBase.permanentDeleteRecord', context: context);
-
-  @override
-  Future<void> permanentDeleteRecord(RecordModel recordModel) {
-    return _$permanentDeleteRecordAsyncAction
-        .run(() => super.permanentDeleteRecord(recordModel));
-  }
-
-  late final _$permanentDeleteAllRecordsAsyncAction = AsyncAction(
-      'HomeControllerBase.permanentDeleteAllRecords',
+  late final _$permanentDeleteRecordingAsyncAction = AsyncAction(
+      'HomeControllerBase.permanentDeleteRecording',
       context: context);
 
   @override
-  Future<void> permanentDeleteAllRecords() {
-    return _$permanentDeleteAllRecordsAsyncAction
-        .run(() => super.permanentDeleteAllRecords());
+  Future<void> permanentDeleteRecording(RecordingModel recordingModel) {
+    return _$permanentDeleteRecordingAsyncAction
+        .run(() => super.permanentDeleteRecording(recordingModel));
+  }
+
+  late final _$permanentDeleteAllRecordingsAsyncAction = AsyncAction(
+      'HomeControllerBase.permanentDeleteAllRecordings',
+      context: context);
+
+  @override
+  Future<void> permanentDeleteAllRecordings() {
+    return _$permanentDeleteAllRecordingsAsyncAction
+        .run(() => super.permanentDeleteAllRecordings());
   }
 
   late final _$HomeControllerBaseActionController =
       ActionController(name: 'HomeControllerBase', context: context);
 
   @override
-  void addRecord(String audioPath) {
+  void addRecording(RecordingModel recordingModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.addRecord');
+        name: 'HomeControllerBase.addRecording');
     try {
-      return super.addRecord(audioPath);
+      return super.addRecording(recordingModel);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void deleteRecord(RecordModel recordModel) {
+  void deleteRecording(RecordingModel recordingModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.deleteRecord');
+        name: 'HomeControllerBase.deleteRecording');
     try {
-      return super.deleteRecord(recordModel);
+      return super.deleteRecording(recordingModel);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void restoreRecord(RecordModel recordModel) {
+  void restoreRecording(RecordingModel recordingModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.restoreRecord');
+        name: 'HomeControllerBase.restoreRecording');
     try {
-      return super.restoreRecord(recordModel);
+      return super.restoreRecording(recordingModel);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -156,8 +158,8 @@ mixin _$HomeController on HomeControllerBase, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
-myRecords: ${myRecords},
-deletedRecords: ${deletedRecords},
+myRecordings: ${myRecordings},
+deletedRecordings: ${deletedRecordings},
 hasPermission: ${hasPermission}
     ''';
   }

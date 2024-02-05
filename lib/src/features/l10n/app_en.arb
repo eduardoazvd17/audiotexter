@@ -1,11 +1,26 @@
 {
     "appName": "AudioTexter",
-    "myRecords": "My Records",
-    "deletedRecords": "Deleted Records",
-    "myRecordsEmptyMessage": "No recordings found",
-    "deletedRecordsEmptyMessage": "No deleted recordings",
+    "myRecordings": "My Recordings",
+    "deletedRecordings": "Deleted Recordings",
+    "myRecordingsEmptyMessage": "No recordings found",
+    "deletedRecordingsEmptyMessage": "No deleted recordings",
     "recording": "Recording",
     "paused": "Paused",
     "stopAndSaveRecording": "Stop and save recording",
-    "cancelRecording": "Cancel recording"
+    "cancelRecording": "Cancel recording",
+    "newRecording": "New recording",
+    "title": "Title",
+    "deleteRecordingTitle": "Delete recording",
+    "deleteRecordingContent": "Do you really want to delete the recording: {title}?",
+    "@deleteRecordingContent": {
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
+    "deleteAllRecordingsTitle": "Delete all recordings",
+    "deleteAllRecordingsContent": "Do you really want to delete all recordings?",
+    "yes": "Yes",
+    "no": "No"
 }

@@ -3,67 +3,70 @@ import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/models/record_model.dart';
+import '../../../../core/models/recording_model.dart';
 
 class HomeService {
-  static const kMyRecords = "myRecords";
-  static const kDeletedRecords = "deletedRecords";
+  static const kMyRecordings = "myRecordings";
+  static const kDeletedRecordings = "deletedRecordings";
 
-  Future<void> saveMyRecords(List<RecordModel> myRecords) async {
-    final List<String> jsonList = myRecords.map((e) {
+  Future<void> saveMyRecordings(List<RecordingModel> myRecordings) async {
+    final List<String> jsonList = myRecordings.map((e) {
       return jsonEncode(e.toMap());
     }).toList();
 
     final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(kMyRecords, jsonList);
+    prefs.setStringList(kMyRecordings, jsonList);
   }
 
-  Future<void> saveDeletedRecords(List<RecordModel> deletedRecords) async {
-    final List<String> jsonList = deletedRecords.map((e) {
+  Future<void> saveDeletedRecordings(
+      List<RecordingModel> deletedRecordings) async {
+    final List<String> jsonList = deletedRecordings.map((e) {
       return jsonEncode(e.toMap());
     }).toList();
 
     final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(kDeletedRecords, jsonList);
+    prefs.setStringList(kDeletedRecordings, jsonList);
   }
 
-  Future<List<RecordModel>> loadMyRecords() async {
+  Future<List<RecordingModel>> loadMyRecordings() async {
     final prefs = await SharedPreferences.getInstance();
-    final List<String>? jsonList = prefs.getStringList(kMyRecords);
-    final List<RecordModel> result = jsonList?.map((e) {
-          return RecordModel.fromMap(Map<String, dynamic>.from(jsonDecode(e)));
+    final List<String>? jsonList = prefs.getStringList(kMyRecordings);
+    final List<RecordingModel> result = jsonList?.map((e) {
+          return RecordingModel.fromMap(
+              Map<String, dynamic>.from(jsonDecode(e)));
         }).toList() ??
         [];
 
-    final resultCopy = List<RecordModel>.from(result);
-    for (final record in resultCopy) {
-      final file = File(record.path);
+    final resultCopy = List<RecordingModel>.from(result);
+    for (final recording in resultCopy) {
+      final file = File(recording.path);
       final bool exists = await file.exists();
-      if (!exists) result.remove(record);
+      if (!exists) result.remove(recording);
     }
     if (resultCopy.length != result.length) {
-      await saveMyRecords(result);
+      await saveMyRecordings(result);
     }
 
     return result;
   }
 
-  Future<List<RecordModel>> loadDeletedRecords() async {
+  Future<List<RecordingModel>> loadDeletedRecordings() async {
     final prefs = await SharedPreferences.getInstance();
-    final List<String>? jsonList = prefs.getStringList(kDeletedRecords);
-    final List<RecordModel> result = jsonList?.map((e) {
-          return RecordModel.fromMap(Map<String, dynamic>.from(jsonDecode(e)));
+    final List<String>? jsonList = prefs.getStringList(kDeletedRecordings);
+    final List<RecordingModel> result = jsonList?.map((e) {
+          return RecordingModel.fromMap(
+              Map<String, dynamic>.from(jsonDecode(e)));
         }).toList() ??
         [];
 
-    final resultCopy = List<RecordModel>.from(result);
-    for (final record in resultCopy) {
-      final file = File(record.path);
+    final resultCopy = List<RecordingModel>.from(result);
+    for (final recording in resultCopy) {
+      final file = File(recording.path);
       final bool exists = await file.exists();
-      if (!exists) result.remove(record);
+      if (!exists) result.remove(recording);
     }
     if (resultCopy.length != result.length) {
-      await saveDeletedRecords(result);
+      await saveDeletedRecordings(result);
     }
 
     return result;

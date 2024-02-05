@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiotexter/src/core/models/recording_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,11 +12,13 @@ part 'recording_controller.g.dart';
 class RecordingController = RecordingControllerBase with _$RecordingController;
 
 abstract class RecordingControllerBase with Store {
+  late final TextEditingController titleController;
   late final String audiosDirectoryPath;
-  late final AudioRecorder _recorder;
+  late final AudioRecorder _recordinger;
 
-  RecordingControllerBase({required AudioRecorder audioRecorder}) {
-    _recorder = audioRecorder;
+  RecordingControllerBase({required AudioRecorder audioRecordinger}) {
+    titleController = TextEditingController();
+    _recordinger = audioRecordinger;
     _checkPermissions();
     _loadAudiosDirectoryPath();
   }
@@ -24,7 +28,7 @@ abstract class RecordingControllerBase with Store {
 
   @action
   Future<void> _checkPermissions() async {
-    hasPermission = await _recorder.hasPermission();
+    hasPermission = await _recordinger.hasPermission();
   }
 
   @action
@@ -56,14 +60,16 @@ abstract class RecordingControllerBase with Store {
   }
 
   @action
-  Future<void> startRecord() async {
+  Future<void> startRecording({String? title}) async {
     _checkPermissions();
     if (hasPermission) {
-      final bool isRecording = await _recorder.isRecording();
+      final bool isRecording = await _recordinger.isRecording();
       if (!isRecording) {
         final String audioPath =
             "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
-        _recorder.start(const RecordConfig(), path: audioPath);
+
+        titleController.text = title ?? "New recording";
+        _recordinger.start(const RecordConfig(), path: audioPath);
 
         _durationInSeconds = 0;
         _timer = Timer.periodic(
@@ -77,11 +83,11 @@ abstract class RecordingControllerBase with Store {
   }
 
   @action
-  Future<void> pauseRecord() async {
-    final bool isRecording = await _recorder.isRecording();
-    final bool isPaused = await _recorder.isPaused();
+  Future<void> pauseRecording() async {
+    final bool isRecording = await _recordinger.isRecording();
+    final bool isPaused = await _recordinger.isPaused();
     if (isRecording && !isPaused) {
-      await _recorder.pause();
+      await _recordinger.pause();
 
       _timer?.cancel();
       _timer = null;
@@ -90,11 +96,11 @@ abstract class RecordingControllerBase with Store {
   }
 
   @action
-  Future<void> resumeRecord() async {
-    final bool isRecording = await _recorder.isRecording();
-    final bool isPaused = await _recorder.isPaused();
+  Future<void> resumeRecording() async {
+    final bool isRecording = await _recordinger.isRecording();
+    final bool isPaused = await _recordinger.isPaused();
     if (isRecording && isPaused) {
-      await _recorder.resume();
+      await _recordinger.resume();
 
       _timer = Timer.periodic(
         const Duration(seconds: 1),
@@ -105,18 +111,27 @@ abstract class RecordingControllerBase with Store {
   }
 
   @action
-  Future<String?> stopRecord() async {
-    final bool isRecording = await _recorder.isRecording();
+  Future<RecordingModel?> stopRecording() async {
+    final bool isRecording = await _recordinger.isRecording();
     if (isRecording) {
-      final String? audioPath = await _recorder.stop();
+      RecordingModel? recordingModel;
+      final String? audioPath = await _recordinger.stop();
+      if (audioPath != null && audioPath.isNotEmpty) {
+        recordingModel = RecordingModel(
+          title: titleController.text,
+          date: DateTime.now().subtract(duration),
+          path: audioPath,
+        );
+      }
 
-      _durationInSeconds = 0;
       _timer?.cancel();
       _timer = null;
       this.isRecording = false;
       isPaused = false;
+      titleController.text = "";
+      _durationInSeconds = 0;
 
-      return audioPath;
+      return recordingModel;
     }
     return null;
   }

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/models/record_model.dart';
+import '../../../../core/models/recording_model.dart';
 
-class RecordTileWidget extends StatelessWidget {
-  final RecordModel recordModel;
+class RecordingTileWidget extends StatelessWidget {
+  final RecordingModel recordingModel;
   final void Function()? onOpen;
   final void Function()? onDelete;
   final void Function()? onRestore;
 
-  const RecordTileWidget({
+  const RecordingTileWidget({
     super.key,
-    required this.recordModel,
+    required this.recordingModel,
     this.onOpen,
     this.onDelete,
     this.onRestore,
@@ -23,8 +23,8 @@ class RecordTileWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: Text(recordModel.title),
-          subtitle: Text(recordModel.formattedDate),
+          title: Text(recordingModel.title),
+          subtitle: Text(recordingModel.formattedDate),
           onTap: onOpen,
           contentPadding: EdgeInsets.only(
             left: 15,

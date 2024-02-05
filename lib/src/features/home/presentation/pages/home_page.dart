@@ -1,7 +1,7 @@
+import 'package:audiotexter/src/core/models/recording_model.dart';
 import 'package:audiotexter/src/features/home/data/enums/home_views_enum.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
-import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/deleted_records_view.dart';
-import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/my_records_view.dart';
+import 'package:audiotexter/src/features/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -9,6 +9,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../../core/utils/theme_utils.dart';
 import '../../../recording/presentation/widgets/recording_bottom_sheet_modal.dart';
+import 'home_page_views/deleted_recording_view.dart';
+import 'home_page_views/my_recordings_view.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller;
@@ -16,24 +18,27 @@ class HomePage extends StatelessWidget {
 
   Future<void> _onTapFloatingActionButton(BuildContext context) async {
     switch (controller.currentPage) {
-      case HomeViewsEnum.myRecords:
-        controller.recordingController.startRecord();
-        final audioPath = await showModalBottomSheet<String?>(
+      case HomeViewsEnum.myRecordings:
+        controller.recordingController.startRecording(
+          title:
+              "${AppLocalizations.of(context)!.newRecording} ${controller.myRecordings.length + 1}",
+        );
+        final recordingModel = await showModalBottomSheet<RecordingModel?>(
           context: context,
           enableDrag: false,
           isDismissible: false,
+          isScrollControlled: true,
           builder: (context) {
             return RecordingBottomSheetModal(
               controller: controller.recordingController,
             );
           },
         );
-        if (audioPath != null && audioPath.isNotEmpty) {
-          controller.addRecord(audioPath);
+        if (recordingModel != null) {
+          controller.addRecording(recordingModel);
         }
-      case HomeViewsEnum.deletedRecords:
-        // Show confirmation dialog.
-        controller.permanentDeleteAllRecords();
+      case HomeViewsEnum.deletedRecordings:
+        _showDeleteAllRecordingsDialog(context);
     }
   }
 
@@ -54,8 +59,8 @@ class HomePage extends StatelessWidget {
         controller: controller.pageViewController,
         onPageChanged: controller.changePage,
         children: [
-          MyRecordsView(controller: controller),
-          DeletedRecordsView(controller: controller),
+          MyRecordingsView(controller: controller),
+          DeletedRecordingsView(controller: controller),
         ],
       );
     });
@@ -67,10 +72,10 @@ class HomePage extends StatelessWidget {
         return Material(
           elevation: 5,
           color: switch (controller.currentPage) {
-            HomeViewsEnum.myRecords =>
+            HomeViewsEnum.myRecordings =>
               controller.hasPermission ? Colors.red : Colors.grey,
-            HomeViewsEnum.deletedRecords =>
-              controller.deletedRecords.isEmpty ? Colors.grey : Colors.red,
+            HomeViewsEnum.deletedRecordings =>
+              controller.deletedRecordings.isEmpty ? Colors.grey : Colors.red,
           },
           borderRadius: BorderRadius.circular(100),
           child: DecoratedBox(
@@ -86,12 +91,12 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: switch (controller.currentPage) {
-                  HomeViewsEnum.myRecords => Icon(
+                  HomeViewsEnum.myRecordings => Icon(
                       Icons.mic,
                       size: 30,
                       color: ThemeUtils.borderColor,
                     ).animate().fade(),
-                  HomeViewsEnum.deletedRecords => Icon(
+                  HomeViewsEnum.deletedRecordings => Icon(
                       Icons.delete_forever,
                       size: 30,
                       color: ThemeUtils.borderColor,
@@ -128,6 +133,42 @@ class HomePage extends StatelessWidget {
               }).toList(),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  void _showDeleteAllRecordingsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog.adaptive(
+          title: Text(
+            AppLocalizations.of(context)!.deleteAllRecordingsTitle,
+          ),
+          content: Text(
+            AppLocalizations.of(context)!.deleteAllRecordingsContent,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.permanentDeleteAllRecordings();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.yes,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: Navigator.of(context).pop,
+              child: Text(
+                AppLocalizations.of(context)!.no,
+              ),
+            ),
+          ],
         );
       },
     );

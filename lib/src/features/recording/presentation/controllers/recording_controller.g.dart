@@ -123,36 +123,37 @@ mixin _$RecordingController on RecordingControllerBase, Store {
         .run(() => super._loadAudiosDirectoryPath());
   }
 
-  late final _$startRecordAsyncAction =
-      AsyncAction('RecordingControllerBase.startRecord', context: context);
+  late final _$startRecordingAsyncAction =
+      AsyncAction('RecordingControllerBase.startRecording', context: context);
 
   @override
-  Future<void> startRecord() {
-    return _$startRecordAsyncAction.run(() => super.startRecord());
+  Future<void> startRecording({String? title}) {
+    return _$startRecordingAsyncAction
+        .run(() => super.startRecording(title: title));
   }
 
-  late final _$pauseRecordAsyncAction =
-      AsyncAction('RecordingControllerBase.pauseRecord', context: context);
+  late final _$pauseRecordingAsyncAction =
+      AsyncAction('RecordingControllerBase.pauseRecording', context: context);
 
   @override
-  Future<void> pauseRecord() {
-    return _$pauseRecordAsyncAction.run(() => super.pauseRecord());
+  Future<void> pauseRecording() {
+    return _$pauseRecordingAsyncAction.run(() => super.pauseRecording());
   }
 
-  late final _$resumeRecordAsyncAction =
-      AsyncAction('RecordingControllerBase.resumeRecord', context: context);
+  late final _$resumeRecordingAsyncAction =
+      AsyncAction('RecordingControllerBase.resumeRecording', context: context);
 
   @override
-  Future<void> resumeRecord() {
-    return _$resumeRecordAsyncAction.run(() => super.resumeRecord());
+  Future<void> resumeRecording() {
+    return _$resumeRecordingAsyncAction.run(() => super.resumeRecording());
   }
 
-  late final _$stopRecordAsyncAction =
-      AsyncAction('RecordingControllerBase.stopRecord', context: context);
+  late final _$stopRecordingAsyncAction =
+      AsyncAction('RecordingControllerBase.stopRecording', context: context);
 
   @override
-  Future<String?> stopRecord() {
-    return _$stopRecordAsyncAction.run(() => super.stopRecord());
+  Future<RecordingModel?> stopRecording() {
+    return _$stopRecordingAsyncAction.run(() => super.stopRecording());
   }
 
   @override

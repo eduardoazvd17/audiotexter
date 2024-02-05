@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:audiotexter/src/core/models/record_model.dart';
+import 'package:audiotexter/src/core/models/recording_model.dart';
 import 'package:audiotexter/src/features/recording/presentation/controllers/recording_controller.dart';
 
 import '../../data/enums/home_views_enum.dart';
@@ -47,72 +47,68 @@ abstract class HomeControllerBase with Store {
   bool get hasPermission => recordingController.hasPermission;
 
   @observable
-  ObservableList<RecordModel> myRecords = ObservableList<RecordModel>();
+  ObservableList<RecordingModel> myRecordings =
+      ObservableList<RecordingModel>();
 
   @observable
-  ObservableList<RecordModel> deletedRecords = ObservableList<RecordModel>();
+  ObservableList<RecordingModel> deletedRecordings =
+      ObservableList<RecordingModel>();
 
   @action
   Future<void> _loadRecordings() async {
     isLoading = true;
     try {
-      myRecords.addAll(await _service.loadMyRecords());
-      deletedRecords.addAll(await _service.loadDeletedRecords());
+      myRecordings.addAll(await _service.loadMyRecordings());
+      deletedRecordings.addAll(await _service.loadDeletedRecordings());
     } catch (_) {}
     isLoading = false;
   }
 
   @action
-  void addRecord(String audioPath) {
-    myRecords.add(
-      RecordModel(
-        title: 'New recording (${myRecords.length + 1})',
-        date: DateTime.now(),
-        path: audioPath,
-      ),
-    );
-    _service.saveMyRecords(myRecords);
+  void addRecording(RecordingModel recordingModel) {
+    myRecordings.add(recordingModel);
+    _service.saveMyRecordings(myRecordings);
   }
 
   @action
-  Future<void> openRecord(RecordModel recordModel) async {
+  Future<void> openRecording(RecordingModel recordingModel) async {
     //! TEMP
     final player = AudioPlayer();
-    await player.setFilePath(recordModel.path);
+    await player.setFilePath(recordingModel.path);
     await player.play();
   }
 
   @action
-  void deleteRecord(RecordModel recordModel) {
-    myRecords.remove(recordModel);
-    deletedRecords.add(recordModel);
+  void deleteRecording(RecordingModel recordingModel) {
+    myRecordings.remove(recordingModel);
+    deletedRecordings.add(recordingModel);
 
-    _service.saveMyRecords(myRecords);
-    _service.saveDeletedRecords(deletedRecords);
+    _service.saveMyRecordings(myRecordings);
+    _service.saveDeletedRecordings(deletedRecordings);
   }
 
   @action
-  void restoreRecord(RecordModel recordModel) {
-    deletedRecords.remove(recordModel);
-    myRecords.add(recordModel);
+  void restoreRecording(RecordingModel recordingModel) {
+    deletedRecordings.remove(recordingModel);
+    myRecordings.add(recordingModel);
 
-    _service.saveDeletedRecords(deletedRecords);
-    _service.saveMyRecords(myRecords);
+    _service.saveDeletedRecordings(deletedRecordings);
+    _service.saveMyRecordings(myRecordings);
   }
 
   @action
-  Future<void> permanentDeleteRecord(RecordModel recordModel) async {
-    await File(recordModel.path).delete();
-    deletedRecords.remove(recordModel);
-    await _service.saveDeletedRecords(deletedRecords);
+  Future<void> permanentDeleteRecording(RecordingModel recordingModel) async {
+    await File(recordingModel.path).delete();
+    deletedRecordings.remove(recordingModel);
+    await _service.saveDeletedRecordings(deletedRecordings);
   }
 
   @action
-  Future<void> permanentDeleteAllRecords() async {
-    for (final RecordModel recordModel in deletedRecords) {
-      await File(recordModel.path).delete();
+  Future<void> permanentDeleteAllRecordings() async {
+    for (final RecordingModel recordingModel in deletedRecordings) {
+      await File(recordingModel.path).delete();
     }
-    deletedRecords.clear();
-    await _service.saveDeletedRecords(deletedRecords);
+    deletedRecordings.clear();
+    await _service.saveDeletedRecordings(deletedRecordings);
   }
 }

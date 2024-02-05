@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../../core/widgets/empty_list_widget.dart';
-import '../../widgets/record_tile_widget.dart';
+import '../../widgets/recording_tile_widget.dart';
 
-class MyRecordsView extends StatelessWidget {
+class MyRecordingsView extends StatelessWidget {
   final HomeController controller;
-  const MyRecordsView({super.key, required this.controller});
+  const MyRecordingsView({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class MyRecordsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Text(
-              HomeViewsEnum.myRecords.title(context),
+              HomeViewsEnum.myRecordings.title(context),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -41,7 +41,7 @@ class MyRecordsView extends StatelessWidget {
                   );
                 }
 
-                if (controller.myRecords.isEmpty) {
+                if (controller.myRecordings.isEmpty) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -49,9 +49,9 @@ class MyRecordsView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           EmptyListWidget(
-                            icon: HomeViewsEnum.myRecords.icon,
+                            icon: HomeViewsEnum.myRecordings.icon,
                             message: AppLocalizations.of(context)!
-                                .myRecordsEmptyMessage,
+                                .myRecordingsEmptyMessage,
                           ),
                         ],
                       ),
@@ -60,13 +60,14 @@ class MyRecordsView extends StatelessWidget {
                 }
 
                 return ListView.builder(
-                  itemCount: controller.myRecords.length,
+                  itemCount: controller.myRecordings.length,
                   itemBuilder: (context, index) {
-                    final recordModel = controller.myRecords[index];
-                    return RecordTileWidget(
-                      recordModel: recordModel,
-                      onOpen: () => controller.openRecord(recordModel),
-                      onDelete: () => controller.deleteRecord(recordModel),
+                    final recordingModel = controller.myRecordings[index];
+                    return RecordingTileWidget(
+                      recordingModel: recordingModel,
+                      onOpen: () => controller.openRecording(recordingModel),
+                      onDelete: () =>
+                          controller.deleteRecording(recordingModel),
                     );
                   },
                 );
