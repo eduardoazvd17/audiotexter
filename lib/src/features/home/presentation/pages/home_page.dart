@@ -39,6 +39,7 @@ class HomePage extends StatelessWidget {
   Widget _floatingActionButtonWidget() {
     return Material(
       elevation: 5,
+      color: Colors.red,
       borderRadius: BorderRadius.circular(100),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -50,9 +51,13 @@ class HomePage extends StatelessWidget {
         child: InkWell(
           onTap: () {},
           borderRadius: BorderRadius.circular(100),
-          child: const Padding(
-            padding: EdgeInsets.all(20),
-            child: Icon(Icons.mic, size: 30),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Icon(
+              Icons.mic,
+              size: 30,
+              color: ThemeUtils.borderColor,
+            ),
           ),
         ),
       ),
