@@ -105,14 +105,6 @@ mixin _$HomeController on HomeControllerBase, Store {
     return _$_loadRecordingsAsyncAction.run(() => super._loadRecordings());
   }
 
-  late final _$recordAsyncAction =
-      AsyncAction('HomeControllerBase.record', context: context);
-
-  @override
-  Future<void> record(BuildContext context) {
-    return _$recordAsyncAction.run(() => super.record(context));
-  }
-
   late final _$HomeControllerBaseActionController =
       ActionController(name: 'HomeControllerBase', context: context);
 
@@ -150,11 +142,11 @@ mixin _$HomeController on HomeControllerBase, Store {
   }
 
   @override
-  void permanentDeleteAllRecords(BuildContext context) {
+  void permanentDeleteAllRecords() {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
         name: 'HomeControllerBase.permanentDeleteAllRecords');
     try {
-      return super.permanentDeleteAllRecords(context);
+      return super.permanentDeleteAllRecords();
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }

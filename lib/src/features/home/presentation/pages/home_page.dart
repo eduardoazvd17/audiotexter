@@ -8,10 +8,32 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../../core/utils/theme_utils.dart';
+import '../../../recording/presentation/widgets/recording_bottom_sheet_modal.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller;
   const HomePage({super.key, required this.controller});
+
+  Future<void> _onTapFloatingActionButton(BuildContext context) async {
+    switch (controller.currentPage) {
+      case HomeViewsEnum.myRecords:
+        controller.recordingController.startRecord();
+        final audioPath = await showModalBottomSheet<String?>(
+          context: context,
+          enableDrag: false,
+          isDismissible: false,
+          builder: (context) {
+            return RecordingBottomSheetModal(
+              controller: controller.recordingController,
+            );
+          },
+        );
+        print("audioPath: $audioPath");
+      case HomeViewsEnum.deletedRecords:
+        // Show confirmation dialog.
+        controller.permanentDeleteAllRecords();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +79,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             child: InkWell(
-              onTap: () {
-                switch (controller.currentPage) {
-                  case HomeViewsEnum.myRecords:
-                    controller.record(context);
-                  case HomeViewsEnum.deletedRecords:
-                    controller.permanentDeleteAllRecords(context);
-                }
-              },
+              onTap: () => _onTapFloatingActionButton(context),
               borderRadius: BorderRadius.circular(100),
               child: Padding(
                 padding: const EdgeInsets.all(20),

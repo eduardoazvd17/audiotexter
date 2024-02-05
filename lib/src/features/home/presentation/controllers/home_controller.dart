@@ -11,11 +11,10 @@ part 'home_controller.g.dart';
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store {
+  final RecordingController recordingController;
   late final PageController pageViewController;
-  late final RecordingController _recordingController;
 
-  HomeControllerBase({required RecordingController recordingController}) {
-    _recordingController = recordingController;
+  HomeControllerBase({required this.recordingController}) {
     pageViewController = PageController();
     _loadRecordings();
   }
@@ -39,7 +38,7 @@ abstract class HomeControllerBase with Store {
   }
 
   @computed
-  bool get hasPermission => _recordingController.hasPermission;
+  bool get hasPermission => recordingController.hasPermission;
 
   @observable
   List<RecordModel> myRecords = [];
@@ -49,17 +48,16 @@ abstract class HomeControllerBase with Store {
 
   @action
   Future<void> _loadRecordings() async {}
-  @action
-  Future<void> record(BuildContext context) async {
-    _recordingController;
-  }
 
   @action
   void openRecord(RecordModel recordModel) {}
+
   @action
   void deleteRecord(RecordModel recordModel) {}
+
   @action
   void permanentDeleteRecord(RecordModel recordModel) {}
+
   @action
-  void permanentDeleteAllRecords(BuildContext context) {}
+  void permanentDeleteAllRecords() {}
 }

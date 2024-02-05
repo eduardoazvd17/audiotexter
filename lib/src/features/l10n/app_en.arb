@@ -3,5 +3,9 @@
     "myRecords": "My Records",
     "deletedRecords": "Deleted Records",
     "myRecordsEmptyMessage": "No recordings found",
-    "deletedRecordsEmptyMessage": "No deleted recordings"
+    "deletedRecordsEmptyMessage": "No deleted recordings",
+    "recording": "Recording",
+    "paused": "Paused",
+    "stopAndSaveRecording": "Stop and save recording",
+    "cancelRecording": "Cancel recording"
 }

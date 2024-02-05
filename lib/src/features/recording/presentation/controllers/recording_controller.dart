@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -39,10 +40,20 @@ abstract class RecordingControllerBase with Store {
   bool isPaused = false;
 
   @observable
-  Timer? timer;
+  Timer? _timer;
 
   @observable
-  int recordTime = 0;
+  int _durationInSeconds = 0;
+
+  @computed
+  Duration get duration => Duration(seconds: _durationInSeconds);
+
+  @computed
+  String get timerString {
+    final int minutes = _durationInSeconds ~/ 60;
+    final int seconds = _durationInSeconds % 60;
+    return "${NumberFormat("00").format(minutes)}:${NumberFormat("00").format(seconds)}";
+  }
 
   @action
   Future<void> startRecord() async {
@@ -54,7 +65,11 @@ abstract class RecordingControllerBase with Store {
             "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
         _recorder.start(const RecordConfig(), path: audioPath);
 
-        timer = Timer.periodic(const Duration(seconds: 1), (_) => recordTime++);
+        _durationInSeconds = 0;
+        _timer = Timer.periodic(
+          const Duration(seconds: 1),
+          (_) => _durationInSeconds++,
+        );
         this.isRecording = true;
         isPaused = false;
       }
@@ -68,8 +83,8 @@ abstract class RecordingControllerBase with Store {
     if (isRecording && !isPaused) {
       await _recorder.pause();
 
-      timer?.cancel();
-      timer = null;
+      _timer?.cancel();
+      _timer = null;
       this.isPaused = true;
     }
   }
@@ -81,7 +96,10 @@ abstract class RecordingControllerBase with Store {
     if (isRecording && isPaused) {
       await _recorder.resume();
 
-      timer = Timer.periodic(const Duration(seconds: 1), (_) => recordTime++);
+      _timer = Timer.periodic(
+        const Duration(seconds: 1),
+        (_) => _durationInSeconds++,
+      );
       this.isPaused = false;
     }
   }
@@ -92,8 +110,9 @@ abstract class RecordingControllerBase with Store {
     if (isRecording) {
       final String? audioPath = await _recorder.stop();
 
-      timer?.cancel();
-      timer = null;
+      _durationInSeconds = 0;
+      _timer?.cancel();
+      _timer = null;
       this.isRecording = false;
       isPaused = false;
 

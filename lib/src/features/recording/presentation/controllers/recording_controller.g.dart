@@ -61,15 +61,15 @@ mixin _$RecordingController on RecordingControllerBase, Store {
       Atom(name: 'RecordingControllerBase.timer', context: context);
 
   @override
-  Timer? get timer {
+  Timer? get _timer {
     _$timerAtom.reportRead();
-    return super.timer;
+    return super._timer;
   }
 
   @override
-  set timer(Timer? value) {
-    _$timerAtom.reportWrite(value, super.timer, () {
-      super.timer = value;
+  set _timer(Timer? value) {
+    _$timerAtom.reportWrite(value, super._timer, () {
+      super._timer = value;
     });
   }
 
@@ -77,15 +77,15 @@ mixin _$RecordingController on RecordingControllerBase, Store {
       Atom(name: 'RecordingControllerBase.recordTime', context: context);
 
   @override
-  int get recordTime {
+  int get _durationInSeconds {
     _$recordTimeAtom.reportRead();
-    return super.recordTime;
+    return super._durationInSeconds;
   }
 
   @override
-  set recordTime(int value) {
-    _$recordTimeAtom.reportWrite(value, super.recordTime, () {
-      super.recordTime = value;
+  set _durationInSeconds(int value) {
+    _$recordTimeAtom.reportWrite(value, super._durationInSeconds, () {
+      super._durationInSeconds = value;
     });
   }
 
@@ -146,8 +146,8 @@ mixin _$RecordingController on RecordingControllerBase, Store {
 hasPermission: ${hasPermission},
 isRecording: ${isRecording},
 isPaused: ${isPaused},
-timer: ${timer},
-recordTime: ${recordTime}
+timer: ${_timer},
+recordTime: ${_durationInSeconds}
     ''';
   }
 }
