@@ -1,14 +1,30 @@
-import 'package:audiotexter/src/core/models/record_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
+import 'package:audiotexter/src/core/models/record_model.dart';
+import 'package:audiotexter/src/features/recording/presentation/controllers/recording_controller.dart';
+
 import '../../data/enums/home_views_enum.dart';
+
 part 'home_controller.g.dart';
 
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store {
-  final pageViewController = PageController();
+  late final PageController pageViewController;
+  late final RecordingController _recordingController;
+  HomeControllerBase() {
+    pageViewController = PageController();
+    _recordingController = GetIt.I.get<RecordingController>();
+    _loadRecordings();
+  }
+
+  @observable
+  bool isLoading = false;
+
+  @observable
+  String? error;
 
   @observable
   HomeViewsEnum _currentPage = HomeViewsEnum.values.first;
@@ -28,7 +44,13 @@ abstract class HomeControllerBase with Store {
   @observable
   List<RecordModel> deletedRecords = [];
 
+  Future<void> _loadRecordings() async {}
+  Future<void> record(BuildContext context) async {
+    _recordingController;
+  }
+
   void openRecord(RecordModel recordModel) {}
   void deleteRecord(RecordModel recordModel) {}
   void permanentDeleteRecord(RecordModel recordModel) {}
+  void permanentDeleteAllRecords(BuildContext context) {}
 }

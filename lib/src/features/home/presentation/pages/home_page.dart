@@ -3,6 +3,7 @@ import 'package:audiotexter/src/features/home/presentation/controllers/home_cont
 import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/deleted_records_view.dart';
 import 'package:audiotexter/src/features/home/presentation/pages/home_page_views/my_records_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(title: const Text('AudioTexter'), centerTitle: true),
       body: _pageViewWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: _floatingActionButtonWidget(),
+      floatingActionButton: _floatingActionButtonWidget(context),
       bottomNavigationBar: _navigationBarWidget(),
     );
   }
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _floatingActionButtonWidget() {
+  Widget _floatingActionButtonWidget(BuildContext context) {
     return Material(
       elevation: 5,
       color: Colors.red,
@@ -49,14 +50,34 @@ class HomePage extends StatelessWidget {
           ),
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            switch (controller.currentPage) {
+              case HomeViewsEnum.myRecords:
+                controller.record(context);
+              case HomeViewsEnum.deletedRecords:
+                controller.permanentDeleteAllRecords(context);
+            }
+          },
           borderRadius: BorderRadius.circular(100),
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Icon(
-              Icons.mic,
-              size: 30,
-              color: ThemeUtils.borderColor,
+            child: Observer(
+              builder: (_) {
+                switch (controller.currentPage) {
+                  case HomeViewsEnum.myRecords:
+                    return Icon(
+                      Icons.mic,
+                      size: 30,
+                      color: ThemeUtils.borderColor,
+                    ).animate().fade();
+                  case HomeViewsEnum.deletedRecords:
+                    return Icon(
+                      Icons.delete_forever,
+                      size: 30,
+                      color: ThemeUtils.borderColor,
+                    ).animate().fade();
+                }
+              },
             ),
           ),
         ),
