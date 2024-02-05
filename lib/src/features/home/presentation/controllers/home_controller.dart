@@ -74,6 +74,12 @@ abstract class HomeControllerBase with Store {
   }
 
   @action
+  void restoreRecord(RecordModel recordModel) {
+    deletedRecords.remove(recordModel);
+    myRecords.add(recordModel);
+  }
+
+  @action
   Future<void> permanentDeleteRecord(RecordModel recordModel) async {
     await File(recordModel.path).delete();
     deletedRecords.remove(recordModel);

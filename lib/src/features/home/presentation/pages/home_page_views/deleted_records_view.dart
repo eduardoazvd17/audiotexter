@@ -47,14 +47,14 @@ class DeletedRecordsView extends StatelessWidget {
                 itemCount: controller.deletedRecords.length,
                 itemBuilder: (context, index) {
                   final recordModel = controller.deletedRecords[index];
-                  return Opacity(
-                    opacity: 0.5,
-                    child: RecordTileWidget(
-                      recordModel: recordModel,
-                      onDelete: () {
-                        controller.permanentDeleteRecord(recordModel);
-                      },
-                    ),
+                  return RecordTileWidget(
+                    recordModel: recordModel,
+                    onDelete: () {
+                      controller.permanentDeleteRecord(recordModel);
+                    },
+                    onRestore: () {
+                      controller.restoreRecord(recordModel);
+                    },
                   );
                 },
               );

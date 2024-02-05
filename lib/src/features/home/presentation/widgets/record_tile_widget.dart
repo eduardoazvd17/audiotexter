@@ -7,12 +7,14 @@ class RecordTileWidget extends StatelessWidget {
   final RecordModel recordModel;
   final void Function()? onOpen;
   final void Function()? onDelete;
+  final void Function()? onRestore;
 
   const RecordTileWidget({
     super.key,
     required this.recordModel,
     this.onOpen,
     this.onDelete,
+    this.onRestore,
   });
 
   @override
@@ -28,6 +30,15 @@ class RecordTileWidget extends StatelessWidget {
             left: 15,
             right: onDelete == null ? 15 : 0,
           ),
+          leading: onRestore != null
+              ? IconButton(
+                  onPressed: onRestore,
+                  icon: Icon(
+                    CupertinoIcons.refresh,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+              : null,
           trailing: onDelete != null
               ? IconButton(
                   onPressed: onDelete,
