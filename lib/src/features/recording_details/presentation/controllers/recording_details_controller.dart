@@ -1,3 +1,5 @@
+import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/models/recording_model.dart';
@@ -18,8 +20,9 @@ abstract class RecordingDetailsControllerBase with Store {
 
   @action
   void renameRecording(String name) {
-    final newRecordingModel = recordingModel?.copyWith(name: name);
-    if (newRecordingModel != null) {
+    if (recordingModel != null) {
+      GetIt.I.get<HomeController>().renameRecording(recordingModel!, name);
+      final newRecordingModel = recordingModel!.copyWith(name: name);
       recordingModel = newRecordingModel;
     }
   }
