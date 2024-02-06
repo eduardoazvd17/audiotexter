@@ -18,20 +18,19 @@ void main() async {
 }
 
 void _loadDependencies() {
-  GetIt.I.registerSingleton(AudioRecorder());
   GetIt.I.registerSingleton(
     RecordingController(
-      audioRecordinger: GetIt.I.get<AudioRecorder>(),
+      audioRecordinger: AudioRecorder(),
     ),
   );
-  GetIt.I.registerSingleton(HomeService());
+  GetIt.I.registerFactory(() => HomeService());
   GetIt.I.registerLazySingleton(
     () => HomeController(
       recordingController: GetIt.I.get<RecordingController>(),
       service: GetIt.I.get<HomeService>(),
     ),
   );
-  GetIt.I.registerLazySingleton(() => RecordingDetailsController());
+  GetIt.I.registerFactory(() => RecordingDetailsController());
 }
 
 class AudioTexterApp extends StatelessWidget {

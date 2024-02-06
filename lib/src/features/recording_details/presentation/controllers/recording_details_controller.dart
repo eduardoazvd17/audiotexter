@@ -7,6 +7,12 @@ class RecordingDetailsController = RecordingDetailsControllerBase
     with _$RecordingDetailsController;
 
 abstract class RecordingDetailsControllerBase with Store {
+  void init(RecordingModel? recordingModel) {
+    if (this.recordingModel?.path != recordingModel?.path) {
+      this.recordingModel = recordingModel;
+    }
+  }
+
   @observable
   RecordingModel? recordingModel;
 
