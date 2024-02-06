@@ -12,12 +12,12 @@ part 'recording_controller.g.dart';
 class RecordingController = RecordingControllerBase with _$RecordingController;
 
 abstract class RecordingControllerBase with Store {
-  late final TextEditingController titleController;
+  late final TextEditingController nameController;
   late final String audiosDirectoryPath;
   late final AudioRecorder _recordinger;
 
   RecordingControllerBase({required AudioRecorder audioRecordinger}) {
-    titleController = TextEditingController();
+    nameController = TextEditingController();
     _recordinger = audioRecordinger;
     _checkPermissions();
     _loadAudiosDirectoryPath();
@@ -68,7 +68,7 @@ abstract class RecordingControllerBase with Store {
         final String audioPath =
             "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
 
-        titleController.text = title ?? "New recording";
+        nameController.text = title ?? "New recording";
         _recordinger.start(const RecordConfig(), path: audioPath);
 
         _durationInSeconds = 0;
@@ -118,7 +118,7 @@ abstract class RecordingControllerBase with Store {
       final String? audioPath = await _recordinger.stop();
       if (audioPath != null && audioPath.isNotEmpty) {
         recordingModel = RecordingModel(
-          title: titleController.text,
+          name: nameController.text,
           date: DateTime.now().subtract(duration),
           path: audioPath,
         );
@@ -128,7 +128,7 @@ abstract class RecordingControllerBase with Store {
       _timer = null;
       this.isRecording = false;
       isPaused = false;
-      titleController.text = "";
+      nameController.text = "";
       _durationInSeconds = 0;
 
       return recordingModel;

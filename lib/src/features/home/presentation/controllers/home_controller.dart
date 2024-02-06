@@ -58,6 +58,7 @@ abstract class HomeControllerBase with Store {
     isLoading = true;
     try {
       myRecordings.addAll(await _service.loadMyRecordings());
+      myRecordings.sort((a, b) => b.date.compareTo(a.date));
       deletedRecordings.addAll(await _service.loadDeletedRecordings());
     } catch (_) {}
     isLoading = false;
@@ -77,6 +78,7 @@ abstract class HomeControllerBase with Store {
   @action
   void addRecording(RecordingModel recordingModel) {
     myRecordings.add(recordingModel);
+    myRecordings.sort((a, b) => b.date.compareTo(a.date));
     _service.saveMyRecordings(myRecordings);
   }
 
@@ -93,6 +95,7 @@ abstract class HomeControllerBase with Store {
   void restoreRecording(RecordingModel recordingModel) {
     deletedRecordings.remove(recordingModel);
     myRecordings.add(recordingModel);
+    myRecordings.sort((a, b) => b.date.compareTo(a.date));
 
     _service.saveDeletedRecordings(deletedRecordings);
     _service.saveMyRecordings(myRecordings);

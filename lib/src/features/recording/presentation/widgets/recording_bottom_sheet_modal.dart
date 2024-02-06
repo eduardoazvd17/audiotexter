@@ -42,9 +42,9 @@ class RecordingBottomSheetModal extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(25),
                   child: TextFormField(
-                    controller: controller.titleController,
+                    controller: controller.nameController,
                     decoration: InputDecoration(
-                      label: Text(AppLocalizations.of(context)!.title),
+                      label: Text(AppLocalizations.of(context)!.name),
                       suffixIcon: const Icon(Icons.audio_file_outlined),
                       border: const OutlineInputBorder(),
                     ),

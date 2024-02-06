@@ -9,7 +9,7 @@
     "stopAndSaveRecording": "Stop and save recording",
     "cancelRecording": "Cancel recording",
     "newRecording": "New recording",
-    "title": "Title",
+    "name": "Name",
     "deleteRecordingTitle": "Delete recording",
     "deleteRecordingContent": "Do you really want to delete the recording: {title}?",
     "@deleteRecordingContent": {
@@ -23,5 +23,8 @@
     "deleteAllRecordingsContent": "Do you really want to delete all recordings?",
     "yes": "Yes",
     "no": "No",
-    "recordingDetailsNullErrorMessage": "You must select a recording to view this details page"
+    "recordingDetailsNullErrorMessage": "You must select a recording to view this details page",
+    "renameRecording": "Rename recording",
+    "save": "Save",
+    "cancel": "Cancel"
 }

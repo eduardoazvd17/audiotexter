@@ -95,7 +95,7 @@ class DeletedRecordingsView extends StatelessWidget {
           ),
           content: Text(
             AppLocalizations.of(context)!
-                .deleteRecordingContent(recordingModel.title),
+                .deleteRecordingContent(recordingModel.name),
           ),
           actions: [
             TextButton(
