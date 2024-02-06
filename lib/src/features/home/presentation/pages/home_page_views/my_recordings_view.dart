@@ -72,12 +72,8 @@ class MyRecordingsView extends StatelessWidget {
                           arguments: recordingModel,
                         );
                       },
-                      onRename: (String name) {
-                        controller.renameRecording(recordingModel, name);
-                      },
-                      onDelete: () {
-                        controller.deleteRecording(recordingModel);
-                      },
+                      onRename: controller.renameRecording,
+                      onDelete: controller.deleteRecording,
                     );
                   },
                 );

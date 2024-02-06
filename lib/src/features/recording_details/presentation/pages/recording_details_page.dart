@@ -43,6 +43,7 @@ class RecordingDetailsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Text(
@@ -54,7 +55,60 @@ class RecordingDetailsPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(child: _deleteRecordingButton(context)),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  TextButton _deleteRecordingButton(BuildContext context) {
+    return TextButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog.adaptive(
+              title: Text(
+                AppLocalizations.of(context)!.deleteRecordingTitle,
+              ),
+              content: Text(
+                AppLocalizations.of(context)!.deleteRecordingContent(
+                  controller.recordingModel!.name,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    controller.deleteRecording();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.yes,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: Navigator.of(context).pop,
+                  child: Text(
+                    AppLocalizations.of(context)!.no,
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Text(
+        'Delete this recording',
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.error,
         ),
       ),
     );

@@ -7,9 +7,9 @@ import '../../../l10n/l10n.dart';
 class RecordingTileWidget extends StatelessWidget {
   final RecordingModel recordingModel;
   final void Function()? onOpen;
-  final void Function(String)? onRename;
-  final void Function()? onDelete;
-  final void Function()? onRestore;
+  final void Function(RecordingModel, String)? onRename;
+  final void Function(RecordingModel)? onDelete;
+  final void Function(RecordingModel)? onRestore;
 
   const RecordingTileWidget({
     super.key,
@@ -40,7 +40,7 @@ class RecordingTileWidget extends StatelessWidget {
           ),
           leading: onRestore != null
               ? IconButton(
-                  onPressed: onRestore,
+                  onPressed: () => onRestore?.call(recordingModel),
                   icon: Icon(
                     CupertinoIcons.refresh,
                     color: Theme.of(context).primaryColor,
@@ -52,20 +52,58 @@ class RecordingTileWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (onRename != null) _renameRecordingButton(context),
-                    if (onDelete != null)
-                      IconButton(
-                        onPressed: onDelete,
-                        icon: Icon(
-                          CupertinoIcons.delete,
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                      ),
+                    if (onDelete != null) _deleteRecordingButton(context),
                   ],
                 )
               : null,
         ),
         const Divider(height: 0),
       ],
+    );
+  }
+
+  IconButton _deleteRecordingButton(BuildContext context) {
+    return IconButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog.adaptive(
+              title: Text(
+                AppLocalizations.of(context)!.deleteRecordingTitle,
+              ),
+              content: Text(
+                AppLocalizations.of(context)!
+                    .deleteRecordingContent(recordingModel.name),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    onDelete?.call(recordingModel);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.yes,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: Navigator.of(context).pop,
+                  child: Text(
+                    AppLocalizations.of(context)!.no,
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      icon: Icon(
+        CupertinoIcons.delete,
+        color: Theme.of(context).colorScheme.error,
+      ),
     );
   }
 
@@ -93,7 +131,7 @@ class RecordingTileWidget extends StatelessWidget {
                     textCapitalization: TextCapitalization.sentences,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) {
-                      onRename?.call(nameController.text);
+                      onRename?.call(recordingModel, nameController.text);
                       Navigator.of(context).pop();
                     },
                     decoration: const InputDecoration(
@@ -105,7 +143,7 @@ class RecordingTileWidget extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: () {
-                    onRename?.call(nameController.text);
+                    onRename?.call(recordingModel, nameController.text);
                     Navigator.of(context).pop();
                   },
                   child: Text(AppLocalizations.of(context)!.save),

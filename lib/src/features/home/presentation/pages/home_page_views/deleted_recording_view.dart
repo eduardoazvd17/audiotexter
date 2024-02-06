@@ -1,4 +1,3 @@
-import 'package:audiotexter/src/core/models/recording_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -65,13 +64,8 @@ class DeletedRecordingsView extends StatelessWidget {
                   final recordingModel = controller.deletedRecordings[index];
                   return RecordingTileWidget(
                     recordingModel: recordingModel,
-                    onDelete: () => _showDeleteRecordingDialog(
-                      context,
-                      recordingModel,
-                    ),
-                    onRestore: () {
-                      controller.restoreRecording(recordingModel);
-                    },
+                    onDelete: controller.permanentDeleteRecording,
+                    onRestore: controller.restoreRecording,
                   );
                 },
               );
@@ -79,46 +73,6 @@ class DeletedRecordingsView extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  void _showDeleteRecordingDialog(
-    BuildContext context,
-    RecordingModel recordingModel,
-  ) {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog.adaptive(
-          title: Text(
-            AppLocalizations.of(context)!.deleteRecordingTitle,
-          ),
-          content: Text(
-            AppLocalizations.of(context)!
-                .deleteRecordingContent(recordingModel.name),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                controller.permanentDeleteRecording(recordingModel);
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                AppLocalizations.of(context)!.yes,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: Navigator.of(context).pop,
-              child: Text(
-                AppLocalizations.of(context)!.no,
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }
