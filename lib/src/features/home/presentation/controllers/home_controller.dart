@@ -83,6 +83,13 @@ abstract class HomeControllerBase with Store {
   }
 
   @action
+  void renameRecording(RecordingModel recordingModel, String name) {
+    final int index = myRecordings.indexOf(recordingModel);
+    myRecordings[index] = recordingModel.copyWith(name: name);
+    _service.saveMyRecordings(myRecordings);
+  }
+
+  @action
   void deleteRecording(RecordingModel recordingModel) {
     myRecordings.remove(recordingModel);
     deletedRecordings.add(recordingModel);
