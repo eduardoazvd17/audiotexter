@@ -10,6 +10,7 @@ class RecordingTileWidget extends StatelessWidget {
   final void Function(RecordingModel, String)? onRename;
   final void Function(RecordingModel)? onDelete;
   final void Function(RecordingModel)? onRestore;
+  final bool isFromDeleted;
 
   const RecordingTileWidget({
     super.key,
@@ -18,6 +19,7 @@ class RecordingTileWidget extends StatelessWidget {
     this.onRename,
     this.onDelete,
     this.onRestore,
+    this.isFromDeleted = false,
   });
 
   @override
@@ -73,8 +75,14 @@ class RecordingTileWidget extends StatelessWidget {
                 AppLocalizations.of(context)!.deleteRecordingTitle,
               ),
               content: Text(
-                AppLocalizations.of(context)!
-                    .deleteRecordingContent(recordingModel.name),
+                isFromDeleted
+                    ? AppLocalizations.of(context)!
+                        .permanentDeleteRecordingContent(
+                        recordingModel.name,
+                      )
+                    : AppLocalizations.of(context)!.deleteRecordingContent(
+                        recordingModel.name,
+                      ),
               ),
               actions: [
                 TextButton(

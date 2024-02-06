@@ -12,7 +12,7 @@
     "name": "Name",
     "noName": "No name",
     "deleteRecordingTitle": "Delete recording",
-    "deleteRecordingContent": "Do you really want to delete the recording: {title}?",
+    "deleteRecordingContent": "Do you really want to delete the recording: {title}?\n\nYou can restore it later from \"Deleted Recordings\" tab.",
     "@deleteRecordingContent": {
         "placeholders": {
             "title": {
@@ -20,8 +20,16 @@
             }
         }
     },
+    "permanentDeleteRecordingContent": "Do you really want to permanent delete the recording: {title}?",
+    "@permanentDeleteRecordingContent": {
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
     "deleteAllRecordingsTitle": "Delete all recordings",
-    "deleteAllRecordingsContent": "Do you really want to delete all recordings?",
+    "deleteAllRecordingsContent": "Do you really want to permanent delete all recordings?",
     "yes": "Yes",
     "no": "No",
     "recordingDetailsNullErrorMessage": "You must select a recording to view this details page",

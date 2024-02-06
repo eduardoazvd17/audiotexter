@@ -66,6 +66,7 @@ class DeletedRecordingsView extends StatelessWidget {
                     recordingModel: recordingModel,
                     onDelete: controller.permanentDeleteRecording,
                     onRestore: controller.restoreRecording,
+                    isFromDeleted: true,
                   );
                 },
               );

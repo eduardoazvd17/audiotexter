@@ -40,7 +40,9 @@ class HomePage extends StatelessWidget {
           controller.addRecording(recordingModel);
         }
       case HomeViewsEnum.deletedRecordings:
-        _showDeleteAllRecordingsDialog(context);
+        if (controller.deletedRecordings.isNotEmpty) {
+          _showDeleteAllRecordingsDialog(context);
+        }
     }
   }
 
