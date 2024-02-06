@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:audiotexter/src/core/models/recording_model.dart';
@@ -65,17 +64,20 @@ abstract class HomeControllerBase with Store {
   }
 
   @action
-  void addRecording(RecordingModel recordingModel) {
-    myRecordings.add(recordingModel);
-    _service.saveMyRecordings(myRecordings);
+  void updateRecording(RecordingModel before, RecordingModel? after) {
+    if (after == null) {
+      deleteRecording(before);
+    } else {
+      final int index = myRecordings.indexOf(before);
+      myRecordings[index] = after;
+      _service.saveMyRecordings(myRecordings);
+    }
   }
 
   @action
-  Future<void> openRecording(RecordingModel recordingModel) async {
-    //! TEMP
-    final player = AudioPlayer();
-    await player.setFilePath(recordingModel.path);
-    await player.play();
+  void addRecording(RecordingModel recordingModel) {
+    myRecordings.add(recordingModel);
+    _service.saveMyRecordings(myRecordings);
   }
 
   @action

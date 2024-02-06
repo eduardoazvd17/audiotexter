@@ -16,6 +16,8 @@ class HomePage extends StatelessWidget {
   final HomeController controller;
   const HomePage({super.key, required this.controller});
 
+  static const String routeName = "/";
+
   Future<void> _onTapFloatingActionButton(BuildContext context) async {
     switch (controller.currentPage) {
       case HomeViewsEnum.myRecordings:

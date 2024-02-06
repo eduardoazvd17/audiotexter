@@ -1,6 +1,7 @@
 import 'package:audiotexter/src/features/home/data/enums/home_views_enum.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
 import 'package:audiotexter/src/features/l10n/l10n.dart';
+import 'package:audiotexter/src/features/recording_details/presentation/pages/recording_details_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -65,7 +66,12 @@ class MyRecordingsView extends StatelessWidget {
                     final recordingModel = controller.myRecordings[index];
                     return RecordingTileWidget(
                       recordingModel: recordingModel,
-                      onOpen: () => controller.openRecording(recordingModel),
+                      onOpen: () {
+                        Navigator.of(context).pushNamed(
+                          RecordingDetailsPage.routeName,
+                          arguments: recordingModel,
+                        );
+                      },
                       onDelete: () =>
                           controller.deleteRecording(recordingModel),
                     );

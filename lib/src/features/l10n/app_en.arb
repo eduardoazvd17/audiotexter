@@ -22,5 +22,6 @@
     "deleteAllRecordingsTitle": "Delete all recordings",
     "deleteAllRecordingsContent": "Do you really want to delete all recordings?",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "recordingDetailsNullErrorMessage": "You must select a recording to view this details page"
 }

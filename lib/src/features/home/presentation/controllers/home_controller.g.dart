@@ -89,15 +89,6 @@ mixin _$HomeController on HomeControllerBase, Store {
     return _$_loadRecordingsAsyncAction.run(() => super._loadRecordings());
   }
 
-  late final _$openRecordingAsyncAction =
-      AsyncAction('HomeControllerBase.openRecording', context: context);
-
-  @override
-  Future<void> openRecording(RecordingModel recordingModel) {
-    return _$openRecordingAsyncAction
-        .run(() => super.openRecording(recordingModel));
-  }
-
   late final _$permanentDeleteRecordingAsyncAction = AsyncAction(
       'HomeControllerBase.permanentDeleteRecording',
       context: context);
@@ -120,6 +111,17 @@ mixin _$HomeController on HomeControllerBase, Store {
 
   late final _$HomeControllerBaseActionController =
       ActionController(name: 'HomeControllerBase', context: context);
+
+  @override
+  void updateRecording(RecordingModel before, RecordingModel? after) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.updateRecording');
+    try {
+      return super.updateRecording(before, after);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void addRecording(RecordingModel recordingModel) {
