@@ -26,7 +26,12 @@ class RecordingTileWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: Text(recordingModel.name),
+          title: recordingModel.name.isEmpty
+              ? Opacity(
+                  opacity: 0.25,
+                  child: Text(AppLocalizations.of(context)!.noName),
+                )
+              : Text(recordingModel.name),
           subtitle: Text(recordingModel.formattedDate),
           onTap: onOpen,
           contentPadding: EdgeInsets.only(

@@ -10,6 +10,7 @@
     "cancelRecording": "Cancel recording",
     "newRecording": "New recording",
     "name": "Name",
+    "noName": "No name",
     "deleteRecordingTitle": "Delete recording",
     "deleteRecordingContent": "Do you really want to delete the recording: {title}?",
     "@deleteRecordingContent": {
