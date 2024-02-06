@@ -9,4 +9,12 @@ class RecordingDetailsController = RecordingDetailsControllerBase
 abstract class RecordingDetailsControllerBase with Store {
   @observable
   RecordingModel? recordingModel;
+
+  @action
+  void renameRecording(String name) {
+    final newRecordingModel = recordingModel?.copyWith(name: name);
+    if (newRecordingModel != null) {
+      recordingModel = newRecordingModel;
+    }
+  }
 }
