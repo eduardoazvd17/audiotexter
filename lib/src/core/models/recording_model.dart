@@ -5,28 +5,31 @@ import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
 class RecordingModel extends Equatable {
-  final String title;
+  final String name;
   final DateTime date;
   final String path;
 
   String get formattedDate {
-    final String timeString = "${date.hour}:${date.minute}:${date.second}";
+    final String hour = date.hour.toString().padLeft(2, "0");
+    final String minute = date.minute.toString().padLeft(2, "0");
+    final String second = date.second.toString().padLeft(2, "0");
+    final String timeString = "$hour:$minute:$second";
     return "${DateFormat.yMMMd().format(date)} - $timeString";
   }
 
   File get file => File(path);
 
   const RecordingModel({
-    required this.title,
+    required this.name,
     required this.date,
     required this.path,
   });
 
   RecordingModel copyWith({
-    String? title,
+    String? name,
   }) {
     return RecordingModel(
-      title: title ?? this.title,
+      name: name ?? this.name,
       date: date,
       path: path,
     );
@@ -34,7 +37,7 @@ class RecordingModel extends Equatable {
 
   factory RecordingModel.fromMap(Map<String, dynamic> map) {
     return RecordingModel(
-      title: map['title'],
+      name: map['name'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       path: map['path'],
     );
@@ -42,12 +45,12 @@ class RecordingModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
+      'name': name,
       'date': date.millisecondsSinceEpoch,
       'path': path,
     };
   }
 
   @override
-  List<Object?> get props => [title, date, path];
+  List<Object?> get props => [name, date, path];
 }
