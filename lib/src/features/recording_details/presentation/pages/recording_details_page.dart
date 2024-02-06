@@ -13,10 +13,35 @@ class RecordingDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RecordingModel? recordingModel =
-        ModalRoute.of(context)?.settings.arguments as RecordingModel?;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.recordingModel =
+          ModalRoute.of(context)?.settings.arguments as RecordingModel?;
+    });
 
-    if (recordingModel == null) {
+    if (controller.recordingModel != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(controller.recordingModel!.title),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  controller.recordingModel!.formattedDate,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
       return Scaffold(
         appBar: AppBar(),
         body: Center(
@@ -28,11 +53,5 @@ class RecordingDetailsPage extends StatelessWidget {
         ),
       );
     }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(recordingModel.title),
-      ),
-    );
   }
 }
