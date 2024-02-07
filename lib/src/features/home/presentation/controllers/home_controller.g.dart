@@ -135,6 +135,17 @@ mixin _$HomeController on HomeControllerBase, Store {
   }
 
   @override
+  void renameRecording(RecordingModel recordingModel, String name) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.renameRecording');
+    try {
+      return super.renameRecording(recordingModel, name);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void deleteRecording(RecordingModel recordingModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
         name: 'HomeControllerBase.deleteRecording');

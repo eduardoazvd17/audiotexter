@@ -15,8 +15,9 @@ class RecordingDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.recordingModel ??=
-        ModalRoute.of(context)?.settings.arguments as RecordingModel?;
+    controller.init(
+      ModalRoute.of(context)?.settings.arguments as RecordingModel?,
+    );
 
     return Observer(
       builder: (context) {
@@ -38,7 +39,9 @@ class RecordingDetailsPage extends StatelessWidget {
                 child: Text(AppLocalizations.of(context)!.noName),
               )
             : Text(controller.recordingModel!.name),
-        actions: [_renameRecordingButton(context)],
+        actions: [
+          _renameRecordingButton(context),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -55,9 +58,12 @@ class RecordingDetailsPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Center(child: _deleteRecordingButton(context)),
+            const Divider(height: 30),
+            Expanded(
+              child: SingleChildScrollView(
+                child:
+                    SelectableText(controller.recordingModel!.recognizedWords),
+              ),
             ),
           ],
         ),
@@ -65,8 +71,8 @@ class RecordingDetailsPage extends StatelessWidget {
     );
   }
 
-  TextButton _deleteRecordingButton(BuildContext context) {
-    return TextButton(
+  IconButton _deleteRecordingButton(BuildContext context) {
+    return IconButton(
       onPressed: () async {
         await showDialog(
           context: context,
@@ -105,11 +111,9 @@ class RecordingDetailsPage extends StatelessWidget {
           },
         );
       },
-      child: Text(
-        'Delete this recording',
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.error,
-        ),
+      icon: Icon(
+        CupertinoIcons.delete,
+        color: Theme.of(context).colorScheme.error,
       ),
     );
   }

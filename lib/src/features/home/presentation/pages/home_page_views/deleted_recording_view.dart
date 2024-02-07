@@ -25,52 +25,54 @@ class DeletedRecordingsView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Observer(builder: (context) {
-              if (controller.isLoading) {
-                return const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CupertinoActivityIndicator(),
-                      ],
-                    ),
-                  ],
-                );
-              }
-
-              if (controller.deletedRecordings.isEmpty) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        EmptyListWidget(
-                          icon: HomeViewsEnum.deletedRecordings.icon,
-                          message: AppLocalizations.of(context)!
-                              .deletedRecordingsEmptyMessage,
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              }
-
-              return ListView.builder(
-                itemCount: controller.deletedRecordings.length,
-                itemBuilder: (context, index) {
-                  final recordingModel = controller.deletedRecordings[index];
-                  return RecordingTileWidget(
-                    recordingModel: recordingModel,
-                    onDelete: controller.permanentDeleteRecording,
-                    onRestore: controller.restoreRecording,
-                    isFromDeleted: true,
+            child: Observer(
+              builder: (context) {
+                if (controller.isLoading) {
+                  return const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CupertinoActivityIndicator(),
+                        ],
+                      ),
+                    ],
                   );
-                },
-              );
-            }),
+                }
+
+                if (controller.deletedRecordings.isEmpty) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          EmptyListWidget(
+                            icon: HomeViewsEnum.deletedRecordings.icon,
+                            message: AppLocalizations.of(context)!
+                                .deletedRecordingsEmptyMessage,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+
+                return ListView.builder(
+                  itemCount: controller.deletedRecordings.length,
+                  itemBuilder: (context, index) {
+                    final recordingModel = controller.deletedRecordings[index];
+                    return RecordingTileWidget(
+                      recordingModel: recordingModel,
+                      onDelete: controller.permanentDeleteRecording,
+                      onRestore: controller.restoreRecording,
+                      isFromDeleted: true,
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),

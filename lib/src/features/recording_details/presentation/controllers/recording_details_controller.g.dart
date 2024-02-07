@@ -41,6 +41,17 @@ mixin _$RecordingDetailsController on RecordingDetailsControllerBase, Store {
   }
 
   @override
+  void deleteRecording() {
+    final _$actionInfo = _$RecordingDetailsControllerBaseActionController
+        .startAction(name: 'RecordingDetailsControllerBase.deleteRecording');
+    try {
+      return super.deleteRecording();
+    } finally {
+      _$RecordingDetailsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 recordingModel: ${recordingModel}
