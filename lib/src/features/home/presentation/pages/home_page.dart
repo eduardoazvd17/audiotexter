@@ -21,23 +21,25 @@ class HomePage extends StatelessWidget {
   Future<void> _onTapFloatingActionButton(BuildContext context) async {
     switch (controller.currentPage) {
       case HomeViewsEnum.myRecordings:
-        controller.recordingController.startRecording(
-          title:
-              "${AppLocalizations.of(context)!.newRecording} ${controller.myRecordings.length + 1}",
-        );
-        final recordingModel = await showModalBottomSheet<RecordingModel?>(
-          context: context,
-          enableDrag: false,
-          isDismissible: false,
-          isScrollControlled: true,
-          builder: (context) {
-            return RecordingBottomSheetModal(
-              controller: controller.recordingController,
-            );
-          },
-        );
-        if (recordingModel != null) {
-          controller.addRecording(recordingModel);
+        if (controller.hasPermission) {
+          controller.recordingController.startRecording(
+            title:
+                "${AppLocalizations.of(context)!.newRecording} ${controller.myRecordings.length + 1}",
+          );
+          final recordingModel = await showModalBottomSheet<RecordingModel?>(
+            context: context,
+            enableDrag: false,
+            isDismissible: false,
+            isScrollControlled: true,
+            builder: (context) {
+              return RecordingBottomSheetModal(
+                controller: controller.recordingController,
+              );
+            },
+          );
+          if (recordingModel != null) {
+            controller.addRecording(recordingModel);
+          }
         }
       case HomeViewsEnum.deletedRecordings:
         if (controller.deletedRecordings.isNotEmpty) {
