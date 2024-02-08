@@ -69,13 +69,9 @@ class RecordingDetailsPage extends StatelessWidget {
             ),
             Observer(
               builder: (context) {
-                if (controller.audioPlayerController != null) {
-                  return AudioPlayerWidget(
-                    controller: controller.audioPlayerController!,
-                  );
-                } else {
-                  return const SizedBox();
-                }
+                return AudioPlayerWidget(
+                  controller: controller.audioPlayerController,
+                );
               },
             ),
           ],

@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 
 class AudioPlayerWidget extends StatelessWidget {
-  final AudioPlayer controller;
+  final AudioPlayer? controller;
   AudioPlayerWidget({super.key, required this.controller}) {
-    controller.positionStream.listen(
+    controller?.positionStream.listen(
       (position) {
-        if (controller.duration != null) {
-          if (position.inMilliseconds >= controller.duration!.inMilliseconds) {
-            controller.pause();
-            controller.seek(Duration.zero);
+        if (controller?.duration != null) {
+          if (position.inMilliseconds >= controller!.duration!.inMilliseconds) {
+            controller!.pause();
+            controller!.seek(Duration.zero);
           }
         }
       },
@@ -27,16 +27,23 @@ class AudioPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (controller == null) {
+      return const Padding(
+        padding: EdgeInsets.all(50),
+        child: Center(child: CupertinoActivityIndicator()),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(25),
       child: StreamBuilder<Duration?>(
-        stream: controller.durationStream,
+        stream: controller?.durationStream,
         builder: (context, snapshotDuration) {
           final Duration? duration = snapshotDuration.data;
           final double durationInMS =
               duration?.inMilliseconds.toDouble() ?? 0.0;
           return StreamBuilder<Duration?>(
-            stream: controller.positionStream,
+            stream: controller?.positionStream,
             builder: (context, snapshotPosition) {
               final Duration? position = snapshotPosition.data;
               final double positionInMS =
@@ -49,15 +56,15 @@ class AudioPlayerWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: StreamBuilder<bool>(
-                          stream: controller.playingStream,
+                          stream: controller?.playingStream,
                           builder: (context, snapshot) {
                             final bool isPlaying = snapshot.data ?? false;
                             return IconButton(
                               onPressed: () async {
                                 if (isPlaying) {
-                                  await controller.pause();
+                                  await controller?.pause();
                                 } else {
-                                  await controller.play();
+                                  await controller?.play();
                                 }
                               },
                               icon: isPlaying
@@ -74,8 +81,8 @@ class AudioPlayerWidget extends StatelessWidget {
                               value: positionInMS,
                               max: durationInMS,
                               onChanged: (positionInMS) async {
-                                await controller.pause();
-                                await controller.seek(
+                                await controller?.pause();
+                                await controller?.seek(
                                   Duration(milliseconds: positionInMS.toInt()),
                                 );
                               },
