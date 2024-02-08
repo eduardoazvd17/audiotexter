@@ -1,3 +1,4 @@
+import 'package:audiotexter/src/core/widgets/audio_player_widget.dart';
 import 'package:audiotexter/src/features/l10n/l10n.dart';
 import 'package:audiotexter/src/features/recording_details/presentation/controllers/recording_details_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,6 +66,17 @@ class RecordingDetailsPage extends StatelessWidget {
                   controller.recordingModel!.recognizedWords,
                 ),
               ),
+            ),
+            Observer(
+              builder: (context) {
+                if (controller.audioPlayerController != null) {
+                  return AudioPlayerWidget(
+                    controller: controller.audioPlayerController!,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
 import 'package:get_it/get_it.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/models/recording_model.dart';
@@ -10,11 +11,19 @@ class RecordingDetailsController = RecordingDetailsControllerBase
 
 abstract class RecordingDetailsControllerBase with Store {
   void init(RecordingModel? recordingModel) {
-    this.recordingModel ??= recordingModel;
+    if (this.recordingModel?.path != recordingModel?.path &&
+        recordingModel != null) {
+      this.recordingModel ??= recordingModel;
+      audioPlayerController = AudioPlayer();
+      audioPlayerController!.setFilePath(recordingModel.path);
+    }
   }
 
   @observable
   RecordingModel? recordingModel;
+
+  @observable
+  AudioPlayer? audioPlayerController;
 
   @action
   void renameRecording(String name) {
