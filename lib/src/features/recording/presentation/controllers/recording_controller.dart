@@ -171,9 +171,12 @@ abstract class RecordingControllerBase with Store {
     if (isRecording) {
       isLoading = true;
 
+      recognizedWords += "$recognizedWordsListenerResult.";
       await _speechToText.stop();
       final String? audioPath = await _recorder.stop();
-      recognizedWords += "$recognizedWordsListenerResult.";
+
+      recognizedWords = recognizedWords.trim();
+      if (recognizedWords == ".") recognizedWords = "";
 
       RecordingModel? recordingModel;
       if (audioPath != null && audioPath.isNotEmpty) {

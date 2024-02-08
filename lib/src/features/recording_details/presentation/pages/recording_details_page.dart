@@ -75,19 +75,27 @@ class RecordingDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            height: 0,
-            color: ThemeUtils.borderColor,
-          ),
-          Observer(
-            builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 13),
-                child: AudioPlayerWidget(
-                  controller: controller.audioPlayerController,
+          Material(
+            elevation: 5,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Divider(
+                  height: 0,
+                  color: ThemeUtils.borderColor,
                 ),
-              );
-            },
+                Observer(
+                  builder: (context) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 13),
+                      child: AudioPlayerWidget(
+                        controller: controller.audioPlayerController,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),

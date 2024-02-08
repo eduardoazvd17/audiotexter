@@ -95,7 +95,7 @@ class HomePage extends StatelessWidget {
               onTap: () => _onTapFloatingActionButton(context),
               borderRadius: BorderRadius.circular(100),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(25),
                 child: switch (controller.currentPage) {
                   HomeViewsEnum.myRecordings => Icon(
                       Icons.mic,
