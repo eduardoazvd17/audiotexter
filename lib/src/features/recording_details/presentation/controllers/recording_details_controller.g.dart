@@ -25,6 +25,24 @@ mixin _$RecordingDetailsController on RecordingDetailsControllerBase, Store {
     });
   }
 
+  late final _$audioPlayerControllerAtom = Atom(
+      name: 'RecordingDetailsControllerBase.audioPlayerController',
+      context: context);
+
+  @override
+  AudioPlayer? get audioPlayerController {
+    _$audioPlayerControllerAtom.reportRead();
+    return super.audioPlayerController;
+  }
+
+  @override
+  set audioPlayerController(AudioPlayer? value) {
+    _$audioPlayerControllerAtom.reportWrite(value, super.audioPlayerController,
+        () {
+      super.audioPlayerController = value;
+    });
+  }
+
   late final _$RecordingDetailsControllerBaseActionController =
       ActionController(
           name: 'RecordingDetailsControllerBase', context: context);
@@ -54,7 +72,8 @@ mixin _$RecordingDetailsController on RecordingDetailsControllerBase, Store {
   @override
   String toString() {
     return '''
-recordingModel: ${recordingModel}
+recordingModel: ${recordingModel},
+audioPlayerController: ${audioPlayerController}
     ''';
   }
 }

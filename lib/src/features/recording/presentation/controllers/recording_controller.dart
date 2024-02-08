@@ -86,15 +86,16 @@ abstract class RecordingControllerBase with Store {
   }) async {
     _checkPermissions();
     if (hasPermission) {
-      this.localeId = localeId;
       isLoading = true;
       final bool isRecording = await _recorder.isRecording();
       if (!isRecording) {
+        this.localeId = localeId;
         nameController.text = title ?? "New recording";
-        final String audioPath =
-            "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
         recognizedWords = "";
         recognizedWordsListenerResult = "";
+        _durationInSeconds = 0;
+        final String audioPath =
+            "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
 
         await _speechToText.listen(
           localeId: localeId,
@@ -102,13 +103,14 @@ abstract class RecordingControllerBase with Store {
             recognizedWordsListenerResult = result.recognizedWords;
           },
         );
-        _recorder.start(const RecordConfig(), path: audioPath);
 
-        _durationInSeconds = 0;
+        await _recorder.start(const RecordConfig(), path: audioPath);
+
         _timer = Timer.periodic(
           const Duration(seconds: 1),
           (_) => _durationInSeconds++,
         );
+
         this.isRecording = true;
         isPaused = false;
         isLoading = false;
@@ -124,10 +126,13 @@ abstract class RecordingControllerBase with Store {
       isLoading = true;
       recognizedWords += "$recognizedWordsListenerResult. ";
       recognizedWordsListenerResult = "";
+
       await _speechToText.stop();
       await _recorder.pause();
+
       _timer?.cancel();
       _timer = null;
+
       this.isPaused = true;
       isLoading = false;
     }
@@ -140,7 +145,7 @@ abstract class RecordingControllerBase with Store {
     if (isRecording && isPaused) {
       isLoading = true;
       recognizedWordsListenerResult = "";
-      await _recorder.resume();
+
       await _speechToText.listen(
         localeId: localeId,
         onResult: (result) {
@@ -148,10 +153,13 @@ abstract class RecordingControllerBase with Store {
         },
       );
 
+      await _recorder.resume();
+
       _timer = Timer.periodic(
         const Duration(seconds: 1),
         (_) => _durationInSeconds++,
       );
+
       this.isPaused = false;
       isLoading = false;
     }
@@ -162,12 +170,12 @@ abstract class RecordingControllerBase with Store {
     final bool isRecording = await _recorder.isRecording();
     if (isRecording) {
       isLoading = true;
-      RecordingModel? recordingModel;
-      recognizedWords += "$recognizedWordsListenerResult.";
+
       await _speechToText.stop();
-
       final String? audioPath = await _recorder.stop();
+      recognizedWords += "$recognizedWordsListenerResult.";
 
+      RecordingModel? recordingModel;
       if (audioPath != null && audioPath.isNotEmpty) {
         recordingModel = RecordingModel(
           name: nameController.text,
@@ -179,12 +187,13 @@ abstract class RecordingControllerBase with Store {
 
       _timer?.cancel();
       _timer = null;
+      _durationInSeconds = 0;
+
+      nameController.text = "";
       recognizedWords = "";
       recognizedWordsListenerResult = "";
       this.isRecording = false;
       isPaused = false;
-      nameController.text = "";
-      _durationInSeconds = 0;
       isLoading = false;
       return recordingModel;
     }
