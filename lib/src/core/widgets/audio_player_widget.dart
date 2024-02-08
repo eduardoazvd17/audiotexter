@@ -27,7 +27,7 @@ class AudioPlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (controller == null) {
+    if (controller == null || controller!.audioSource == null) {
       return const Padding(
         padding: EdgeInsets.all(50),
         child: Center(child: CupertinoActivityIndicator()),
