@@ -123,6 +123,7 @@ abstract class RecordingControllerBase with Store {
     if (isRecording && !isPaused) {
       isLoading = true;
       recognizedWords += "$recognizedWordsListenerResult. ";
+      recognizedWordsListenerResult = "";
       await _speechToText.stop();
       await _recorder.pause();
       _timer?.cancel();
@@ -138,6 +139,7 @@ abstract class RecordingControllerBase with Store {
     final bool isPaused = await _recorder.isPaused();
     if (isRecording && isPaused) {
       isLoading = true;
+      recognizedWordsListenerResult = "";
       await _recorder.resume();
       await _speechToText.listen(
         localeId: localeId,
