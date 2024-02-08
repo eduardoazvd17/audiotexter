@@ -61,8 +61,9 @@ class RecordingDetailsPage extends StatelessWidget {
             const Divider(height: 30),
             Expanded(
               child: SingleChildScrollView(
-                child:
-                    SelectableText(controller.recordingModel!.recognizedWords),
+                child: SelectableText(
+                  controller.recordingModel!.recognizedWords,
+                ),
               ),
             ),
           ],

@@ -9,6 +9,7 @@ class RecordingModel extends Equatable {
   final DateTime date;
   final String path;
   final String recognizedWords;
+  final String? editedRecognizedWords;
 
   String get formattedDate {
     final String hour = date.hour.toString().padLeft(2, "0");
@@ -25,6 +26,7 @@ class RecordingModel extends Equatable {
     required this.date,
     required this.path,
     required this.recognizedWords,
+    this.editedRecognizedWords,
   });
 
   RecordingModel copyWith({
@@ -35,6 +37,7 @@ class RecordingModel extends Equatable {
       date: date,
       path: path,
       recognizedWords: recognizedWords,
+      editedRecognizedWords: editedRecognizedWords,
     );
   }
 
@@ -44,6 +47,7 @@ class RecordingModel extends Equatable {
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       path: map['path'],
       recognizedWords: map['recognizedWords'],
+      editedRecognizedWords: map['editedRecognizedWords'],
     );
   }
 
@@ -53,9 +57,10 @@ class RecordingModel extends Equatable {
       'date': date.millisecondsSinceEpoch,
       'path': path,
       'recognizedWords': recognizedWords,
+      'editedRecognizedWords': editedRecognizedWords,
     };
   }
 
   @override
-  List<Object?> get props => [name, date, path];
+  List<Object?> get props => [name, date, path, recognizedWords];
 }
