@@ -3,6 +3,7 @@ import 'package:audiotexter/src/features/home/data/services/home_service.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
 import 'package:audiotexter/src/features/recording_details/presentation/controllers/recording_details_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:record/record.dart';
 import 'src/core/utils/theme_utils.dart';
@@ -13,6 +14,7 @@ import 'src/features/recording_details/presentation/pages/recording_details_page
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   _loadDependencies();
   runApp(const AudioTexterApp());
 }
