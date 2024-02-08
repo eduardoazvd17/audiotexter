@@ -84,7 +84,7 @@ abstract class RecordingControllerBase with Store {
     String localeId = "pt_BR",
     String? title,
   }) async {
-    _checkPermissions();
+    await _checkPermissions();
     if (hasPermission) {
       isLoading = true;
       final bool isRecording = await _recorder.isRecording();

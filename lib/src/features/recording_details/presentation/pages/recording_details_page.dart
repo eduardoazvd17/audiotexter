@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../core/models/recording_model.dart';
+import '../../../../core/utils/theme_utils.dart';
 import '../../../../core/widgets/empty_list_widget.dart';
 
 class RecordingDetailsPage extends StatelessWidget {
@@ -74,11 +75,14 @@ class RecordingDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(height: 0),
+          Divider(
+            height: 0,
+            color: ThemeUtils.borderColor,
+          ),
           Observer(
             builder: (context) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 13),
                 child: AudioPlayerWidget(
                   controller: controller.audioPlayerController,
                 ),

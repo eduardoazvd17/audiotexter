@@ -128,7 +128,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 12),
+            padding: const EdgeInsets.only(top: 35, bottom: 25),
             child: GNav(
               gap: 10,
               selectedIndex: controller.currentPage.index,
