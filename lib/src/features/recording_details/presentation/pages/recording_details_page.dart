@@ -44,12 +44,12 @@ class RecordingDetailsPage extends StatelessWidget {
           _renameRecordingButton(context),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Center(
               child: Text(
                 controller.recordingModel!.formattedDate,
                 style: Theme.of(context)
@@ -59,23 +59,33 @@ class RecordingDetailsPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const Divider(height: 30),
-            Expanded(
-              child: SingleChildScrollView(
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 25),
+            child: Divider(height: 0),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(25),
                 child: SelectableText(
                   controller.recordingModel!.recognizedWords,
                 ),
               ),
             ),
-            Observer(
-              builder: (context) {
-                return AudioPlayerWidget(
+          ),
+          const Divider(height: 0),
+          Observer(
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: AudioPlayerWidget(
                   controller: controller.audioPlayerController,
-                );
-              },
-            ),
-          ],
-        ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
