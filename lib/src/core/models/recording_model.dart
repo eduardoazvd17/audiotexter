@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
@@ -11,12 +12,12 @@ class RecordingModel extends Equatable {
   final String recognizedWords;
   final String? editedRecognizedWords;
 
-  String get formattedDate {
+  String formattedDate(Locale? locale) {
     final String hour = date.hour.toString().padLeft(2, "0");
     final String minute = date.minute.toString().padLeft(2, "0");
     final String second = date.second.toString().padLeft(2, "0");
     final String timeString = "$hour:$minute:$second";
-    return "${DateFormat.yMMMd().format(date)} - $timeString";
+    return "${DateFormat.yMMMd(locale).format(date)} - $timeString";
   }
 
   File get file => File(path);

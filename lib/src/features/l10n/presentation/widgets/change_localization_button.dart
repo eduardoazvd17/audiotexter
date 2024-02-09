@@ -1,4 +1,3 @@
-import 'package:audiotexter/src/features/l10n/data/enums/supported_languages.dart';
 import 'package:audiotexter/src/features/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 

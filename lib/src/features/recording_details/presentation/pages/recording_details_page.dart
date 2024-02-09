@@ -4,6 +4,7 @@ import 'package:audiotexter/src/features/recording_details/presentation/controll
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/models/recording_model.dart';
 import '../../../../core/utils/theme_utils.dart';
@@ -69,7 +70,9 @@ class RecordingDetailsPage extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            controller.recordingModel!.formattedDate,
+            controller.recordingModel!.formattedDate(
+              GetIt.I.get<LocalizationController>().selectedLocalization.locale,
+            ),
             style: Theme.of(context)
                 .textTheme
                 .titleSmall

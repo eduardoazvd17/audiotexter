@@ -1,8 +1,6 @@
-import 'package:audiotexter/src/features/l10n/data/enums/supported_languages.dart';
 import 'package:audiotexter/src/core/utils/localization_utils.dart';
 import 'package:audiotexter/src/features/home/data/services/home_service.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
-import 'package:audiotexter/src/features/l10n/data/services/localization_service.dart';
 import 'package:audiotexter/src/features/l10n/l10n.dart';
 import 'package:audiotexter/src/features/recording_details/presentation/controllers/recording_details_controller.dart';
 import 'package:flutter/material.dart';

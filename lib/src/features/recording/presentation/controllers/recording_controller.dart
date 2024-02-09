@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:audiotexter/src/features/l10n/data/enums/supported_languages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -127,7 +126,6 @@ abstract class RecordingControllerBase with Store {
     if (isRecording && !isPaused) {
       isLoading = true;
       recognizedWords += "$recognizedWordsListenerResult. ";
-      recognizedWordsListenerResult = "";
 
       await _speechToText.stop();
       await _recorder.pause();
@@ -135,6 +133,7 @@ abstract class RecordingControllerBase with Store {
       _timer?.cancel();
       _timer = null;
 
+      recognizedWordsListenerResult = "";
       this.isPaused = true;
       isLoading = false;
     }

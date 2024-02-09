@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/models/recording_model.dart';
 import '../../../l10n/l10n.dart';
@@ -34,7 +35,11 @@ class RecordingTileWidget extends StatelessWidget {
                   child: Text(AppLocalizations.of(context)!.noName),
                 )
               : Text(recordingModel.name),
-          subtitle: Text(recordingModel.formattedDate),
+          subtitle: Text(
+            recordingModel.formattedDate(
+              GetIt.I.get<LocalizationController>().selectedLocalization.locale,
+            ),
+          ),
           onTap: onOpen,
           contentPadding: EdgeInsets.only(
             left: 15,
