@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -61,6 +62,7 @@ class AudioPlayerWidget extends StatelessWidget {
                             final bool isPlaying = snapshot.data ?? false;
                             return IconButton(
                               onPressed: () async {
+                                SystemSound.play(SystemSoundType.click);
                                 if (isPlaying) {
                                   await controller?.pause();
                                 } else {

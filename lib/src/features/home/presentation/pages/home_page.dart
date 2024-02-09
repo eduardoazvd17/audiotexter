@@ -3,6 +3,7 @@ import 'package:audiotexter/src/features/home/data/enums/home_views_enum.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
 import 'package:audiotexter/src/features/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatelessWidget {
             title:
                 "${AppLocalizations.of(context)!.newRecording} ${controller.myRecordings.length + 1}",
           );
+          HapticFeedback.mediumImpact();
           final recordingModel = await showModalBottomSheet<RecordingModel?>(
             context: context,
             enableDrag: false,
@@ -40,6 +42,7 @@ class HomePage extends StatelessWidget {
           if (recordingModel != null) {
             controller.addRecording(recordingModel);
           }
+          HapticFeedback.mediumImpact();
         }
       case HomeViewsEnum.deletedRecordings:
         if (controller.deletedRecordings.isNotEmpty) {
