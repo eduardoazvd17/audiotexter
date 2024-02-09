@@ -9,17 +9,15 @@ class ChangeLocalizationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<LocalizationEnum>(
-      icon: controller.selectedLanguage.icon,
-      onSelected: (value) {
-        controller.selectedLanguage = value;
-      },
+      icon: controller.selectedLocalization.icon,
+      onSelected: controller.changeLocalization,
       itemBuilder: (_) => LocalizationEnum.values.map((e) {
         return PopupMenuItem(
           value: e,
           child: Row(
             children: [
               e.icon,
-              const SizedBox(width: 15),
+              const SizedBox(width: 12.5),
               Text(e.title(context)),
             ],
           ),

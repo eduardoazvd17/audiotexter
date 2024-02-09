@@ -97,8 +97,10 @@ abstract class RecordingControllerBase with Store {
             "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
 
         await _speechToText.listen(
-          localeId:
-              GetIt.I.get<LocalizationController>().selectedLanguage.localeId,
+          localeId: GetIt.I
+              .get<LocalizationController>()
+              ._selectedLocalization
+              .localeId,
           onResult: (result) {
             recognizedWordsListenerResult = result.recognizedWords;
           },
@@ -147,8 +149,10 @@ abstract class RecordingControllerBase with Store {
       recognizedWordsListenerResult = "";
 
       await _speechToText.listen(
-        localeId:
-            GetIt.I.get<LocalizationController>().selectedLanguage.localeId,
+        localeId: GetIt.I
+            .get<LocalizationController>()
+            ._selectedLocalization
+            .localeId,
         onResult: (result) {
           recognizedWordsListenerResult = result.recognizedWords;
         },

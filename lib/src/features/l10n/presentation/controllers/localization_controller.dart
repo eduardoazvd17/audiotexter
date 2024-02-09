@@ -14,9 +14,17 @@ abstract class LocalizationControllerBase with Store {
   }
 
   Future<void> init() async {
-    selectedLanguage = await _service.loadLocalization();
+    _selectedLocalization = await _service.loadLocalization();
   }
 
   @observable
-  LocalizationEnum selectedLanguage = LocalizationEnum.autoDetect;
+  LocalizationEnum _selectedLocalization = LocalizationEnum.autoDetect;
+
+  @computed
+  LocalizationEnum get selectedLocalization => _selectedLocalization;
+
+  Future<void> changeLocalization(LocalizationEnum value) async {
+    _selectedLocalization = value;
+    await _service.saveLocalization(value);
+  }
 }
