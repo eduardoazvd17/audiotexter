@@ -1,5 +1,7 @@
+
 # AudioTexter
 
+<img src="assets/logo/logo.png" width="50px" height="50px"/><br>
 AudioTexter é um aplicativo desenvolvido em Flutter que permite gravar áudios e transcrevê-los em texto.
 
 ## Funcionalidades
