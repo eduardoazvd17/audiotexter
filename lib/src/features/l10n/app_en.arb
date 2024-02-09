@@ -38,5 +38,9 @@
     "cancel": "Cancel",
     "editRecognizedWords": "Edit recognized words",
     "showOriginalText": "Show original text",
-    "showEditedText": "Show edited text"
+    "showEditedText": "Show edited text",
+    "autoDetect": "Auto detect",
+    "english": "English",
+    "portuguese": "Portuguese",
+    "spanish": "Spanish"
 }

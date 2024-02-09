@@ -54,7 +54,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AudioTexter'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('AudioTexter'),
+        centerTitle: true,
+        actions: [_localeChangeButton(context)],
+      ),
       body: _pageViewWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _floatingActionButtonWidget(context),
@@ -73,6 +77,15 @@ class HomePage extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Widget _localeChangeButton(BuildContext context) {
+    return PopupMenuButton(
+      icon: Text('test'),
+      itemBuilder: (_) {
+        return [];
+      },
+    );
   }
 
   Widget _floatingActionButtonWidget(BuildContext context) {
