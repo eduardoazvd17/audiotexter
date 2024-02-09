@@ -67,28 +67,46 @@ class RecordingDetailsPage extends StatelessWidget {
   Widget _getRecordingDetailsAndActions(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Center(
-            child: Text(
-              controller.recordingModel!.formattedDate,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
+        Center(
+          child: Text(
+            controller.recordingModel!.formattedDate,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(color: Colors.grey),
+            textAlign: TextAlign.center,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: SwitchListTile.adaptive(
-            title: Text(" ${AppLocalizations.of(context)!.showOriginal}"),
-            activeColor: Theme.of(context).primaryColor,
-            value: controller.showOriginal,
-            onChanged: controller.isEditing
-                ? null
-                : (value) => controller.showOriginal = value,
+          padding: const EdgeInsets.only(top: 15, bottom: 8),
+          child: Center(
+            child: ToggleButtons(
+              isSelected: [
+                !controller.showOriginal,
+                controller.showOriginal,
+              ],
+              onPressed: controller.isEditing
+                  ? null
+                  : (index) {
+                      if (index == 0) {
+                        controller.showOriginal = false;
+                      }
+                      if (index == 1) {
+                        controller.showOriginal = true;
+                      }
+                    },
+              borderRadius: BorderRadius.circular(10),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(AppLocalizations.of(context)!.showEditedText),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(AppLocalizations.of(context)!.showOriginalText),
+                ),
+              ],
+            ),
           ),
         ),
         Row(
@@ -152,14 +170,20 @@ class RecordingDetailsPage extends StatelessWidget {
         ),
       );
     } else {
-      return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: SelectableText(
-            controller.showOriginal
-                ? controller.recordingModel!.recognizedWords
-                : (controller.recordingModel!.editedRecognizedWords ??
-                    controller.recordingModel!.recognizedWords),
+      final scrollController = ScrollController();
+      return Scrollbar(
+        thumbVisibility: true,
+        controller: scrollController,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: SelectableText(
+              controller.showOriginal
+                  ? controller.recordingModel!.recognizedWords
+                  : (controller.recordingModel!.editedRecognizedWords ??
+                      controller.recordingModel!.recognizedWords),
+            ),
           ),
         ),
       );

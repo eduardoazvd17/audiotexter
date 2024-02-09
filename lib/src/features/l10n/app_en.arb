@@ -37,6 +37,6 @@
     "save": "Save",
     "cancel": "Cancel",
     "editRecognizedWords": "Edit recognized words",
-    "showOriginal": "Show original",
-    "showEdited": "Show edited"
+    "showOriginalText": "Show original text",
+    "showEditedText": "Show edited text"
 }
