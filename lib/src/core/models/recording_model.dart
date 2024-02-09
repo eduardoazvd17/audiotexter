@@ -64,5 +64,11 @@ class RecordingModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [name, date, path, recognizedWords];
+  List<Object?> get props => [
+        name,
+        date,
+        path,
+        recognizedWords,
+        editedRecognizedWords,
+      ];
 }
