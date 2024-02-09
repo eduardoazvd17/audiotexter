@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiotexter/src/features/l10n/data/enums/supported_languages.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,6 +11,8 @@ import 'package:record/record.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 import 'package:audiotexter/src/core/models/recording_model.dart';
+
+import '../../../l10n/l10n.dart';
 
 part 'recording_controller.g.dart';
 
@@ -69,9 +73,6 @@ abstract class RecordingControllerBase with Store {
   @observable
   String recognizedWordsListenerResult = "";
 
-  @observable
-  String localeId = "";
-
   @computed
   String get timerString {
     final int minutes = _durationInSeconds ~/ 60;
@@ -81,7 +82,6 @@ abstract class RecordingControllerBase with Store {
 
   @action
   Future<void> startRecording({
-    String localeId = "pt_BR",
     String? title,
   }) async {
     await _checkPermissions();
@@ -89,7 +89,6 @@ abstract class RecordingControllerBase with Store {
       isLoading = true;
       final bool isRecording = await _recorder.isRecording();
       if (!isRecording) {
-        this.localeId = localeId;
         nameController.text = title ?? "New recording";
         recognizedWords = "";
         recognizedWordsListenerResult = "";
@@ -98,7 +97,8 @@ abstract class RecordingControllerBase with Store {
             "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
 
         await _speechToText.listen(
-          localeId: localeId,
+          localeId:
+              GetIt.I.get<LocalizationController>().selectedLanguage.localeId,
           onResult: (result) {
             recognizedWordsListenerResult = result.recognizedWords;
           },
@@ -147,7 +147,8 @@ abstract class RecordingControllerBase with Store {
       recognizedWordsListenerResult = "";
 
       await _speechToText.listen(
-        localeId: localeId,
+        localeId:
+            GetIt.I.get<LocalizationController>().selectedLanguage.localeId,
         onResult: (result) {
           recognizedWordsListenerResult = result.recognizedWords;
         },

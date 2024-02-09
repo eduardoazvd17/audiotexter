@@ -154,22 +154,6 @@ mixin _$RecordingController on RecordingControllerBase, Store {
     });
   }
 
-  late final _$localeIdAtom =
-      Atom(name: 'RecordingControllerBase.localeId', context: context);
-
-  @override
-  String get localeId {
-    _$localeIdAtom.reportRead();
-    return super.localeId;
-  }
-
-  @override
-  set localeId(String value) {
-    _$localeIdAtom.reportWrite(value, super.localeId, () {
-      super.localeId = value;
-    });
-  }
-
   late final _$_checkPermissionsAsyncAction = AsyncAction(
       'RecordingControllerBase._checkPermissions',
       context: context);
@@ -193,9 +177,9 @@ mixin _$RecordingController on RecordingControllerBase, Store {
       AsyncAction('RecordingControllerBase.startRecording', context: context);
 
   @override
-  Future<void> startRecording({String localeId = "pt_BR", String? title}) {
+  Future<void> startRecording({String? title}) {
     return _$startRecordingAsyncAction
-        .run(() => super.startRecording(localeId: localeId, title: title));
+        .run(() => super.startRecording(title: title));
   }
 
   late final _$pauseRecordingAsyncAction =
@@ -231,7 +215,6 @@ isRecording: ${isRecording},
 isPaused: ${isPaused},
 recognizedWords: ${recognizedWords},
 recognizedWordsListenerResult: ${recognizedWordsListenerResult},
-localeId: ${localeId},
 duration: ${duration},
 timerString: ${timerString}
     ''';

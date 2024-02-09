@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../../core/utils/theme_utils.dart';
+import '../../../l10n/presentation/widgets/change_localization_button.dart';
 import '../../../recording/presentation/widgets/recording_bottom_sheet_modal.dart';
 import 'home_page_views/deleted_recording_view.dart';
 import 'home_page_views/my_recordings_view.dart';
@@ -57,7 +59,11 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('AudioTexter'),
         centerTitle: true,
-        actions: [_localeChangeButton(context)],
+        actions: [
+          ChangeLocalizationButton(
+            controller: GetIt.I.get<LocalizationController>(),
+          ),
+        ],
       ),
       body: _pageViewWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -77,15 +83,6 @@ class HomePage extends StatelessWidget {
         ],
       );
     });
-  }
-
-  Widget _localeChangeButton(BuildContext context) {
-    return PopupMenuButton(
-      icon: Text('test'),
-      itemBuilder: (_) {
-        return [];
-      },
-    );
   }
 
   Widget _floatingActionButtonWidget(BuildContext context) {
