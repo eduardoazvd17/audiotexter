@@ -25,11 +25,31 @@ abstract class RecordingDetailsControllerBase with Store {
   @observable
   AudioPlayer? audioPlayerController;
 
+  @observable
+  bool isEditing = false;
+
+  @observable
+  bool showOriginal = false;
+
   @action
   void renameRecording(String name) {
     if (recordingModel != null) {
       GetIt.I.get<HomeController>().renameRecording(recordingModel!, name);
       final newRecordingModel = recordingModel!.copyWith(name: name);
+      recordingModel = newRecordingModel;
+    }
+  }
+
+  @action
+  void editRecordingRecognizedWords(String editedRecognizedWords) {
+    if (recordingModel != null) {
+      GetIt.I.get<HomeController>().editRecordingRecognizedWords(
+            recordingModel!,
+            editedRecognizedWords,
+          );
+      final newRecordingModel = recordingModel!.copyWith(
+        editedRecognizedWords: editedRecognizedWords,
+      );
       recordingModel = newRecordingModel;
     }
   }

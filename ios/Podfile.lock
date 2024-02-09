@@ -16,8 +16,6 @@ PODS:
   - speech_to_text (0.0.1):
     - Flutter
     - Try
-  - text_to_speech (0.0.1):
-    - Flutter
   - Try (2.1.1)
 
 DEPENDENCIES:
@@ -28,7 +26,6 @@ DEPENDENCIES:
   - record_darwin (from `.symlinks/plugins/record_darwin/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
-  - text_to_speech (from `.symlinks/plugins/text_to_speech/ios`)
 
 SPEC REPOS:
   trunk:
@@ -49,8 +46,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   speech_to_text:
     :path: ".symlinks/plugins/speech_to_text/ios"
-  text_to_speech:
-    :path: ".symlinks/plugins/text_to_speech/ios"
 
 SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
@@ -60,7 +55,6 @@ SPEC CHECKSUMS:
   record_darwin: 1f6619f2abac4d1ca91d3eeab038c980d76f1517
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
-  text_to_speech: 8669facdbd5b72d2939b810493defd991634f6f9
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796

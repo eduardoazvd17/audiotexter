@@ -43,6 +43,38 @@ mixin _$RecordingDetailsController on RecordingDetailsControllerBase, Store {
     });
   }
 
+  late final _$isEditingAtom =
+      Atom(name: 'RecordingDetailsControllerBase.isEditing', context: context);
+
+  @override
+  bool get isEditing {
+    _$isEditingAtom.reportRead();
+    return super.isEditing;
+  }
+
+  @override
+  set isEditing(bool value) {
+    _$isEditingAtom.reportWrite(value, super.isEditing, () {
+      super.isEditing = value;
+    });
+  }
+
+  late final _$showOriginalAtom = Atom(
+      name: 'RecordingDetailsControllerBase.showOriginal', context: context);
+
+  @override
+  bool get showOriginal {
+    _$showOriginalAtom.reportRead();
+    return super.showOriginal;
+  }
+
+  @override
+  set showOriginal(bool value) {
+    _$showOriginalAtom.reportWrite(value, super.showOriginal, () {
+      super.showOriginal = value;
+    });
+  }
+
   late final _$RecordingDetailsControllerBaseActionController =
       ActionController(
           name: 'RecordingDetailsControllerBase', context: context);
@@ -53,6 +85,19 @@ mixin _$RecordingDetailsController on RecordingDetailsControllerBase, Store {
         .startAction(name: 'RecordingDetailsControllerBase.renameRecording');
     try {
       return super.renameRecording(name);
+    } finally {
+      _$RecordingDetailsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void editRecordingRecognizedWords(String editedRecognizedWords) {
+    final _$actionInfo =
+        _$RecordingDetailsControllerBaseActionController.startAction(
+            name:
+                'RecordingDetailsControllerBase.editRecordingRecognizedWords');
+    try {
+      return super.editRecordingRecognizedWords(editedRecognizedWords);
     } finally {
       _$RecordingDetailsControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -73,7 +118,9 @@ mixin _$RecordingDetailsController on RecordingDetailsControllerBase, Store {
   String toString() {
     return '''
 recordingModel: ${recordingModel},
-audioPlayerController: ${audioPlayerController}
+audioPlayerController: ${audioPlayerController},
+isEditing: ${isEditing},
+showOriginal: ${showOriginal}
     ''';
   }
 }

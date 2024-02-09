@@ -11,7 +11,9 @@ import '../../../../core/widgets/empty_list_widget.dart';
 
 class RecordingDetailsPage extends StatelessWidget {
   final RecordingDetailsController controller;
-  const RecordingDetailsPage({super.key, required this.controller});
+  final TextEditingController _recognizedWordsController;
+  RecordingDetailsPage({super.key, required this.controller})
+      : _recognizedWordsController = TextEditingController();
 
   static const String routeName = "/details";
 
@@ -44,59 +46,143 @@ class RecordingDetailsPage extends StatelessWidget {
             : Text(controller.recordingModel!.name),
         actions: [
           _renameRecordingButton(context),
+          _deleteRecordingButton(context),
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Center(
-              child: Text(
-                controller.recordingModel!.formattedDate,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall
-                    ?.copyWith(color: Colors.grey),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
+          _getRecordingDetailsAndActions(context),
           const Padding(
-            padding: EdgeInsets.only(top: 25),
+            padding: EdgeInsets.only(top: 10),
             child: Divider(height: 0),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(25),
-                child: SelectableText(
-                  controller.recordingModel!.recognizedWords,
-                ),
-              ),
+          Expanded(child: _getRecognizedWordsWidget(context)),
+        ],
+      ),
+      bottomNavigationBar: _getAudioPlayerWidget(context),
+    );
+  }
+
+  Widget _getRecordingDetailsAndActions(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Center(
+            child: Text(
+              controller.recordingModel!.formattedDate,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Colors.grey),
+              textAlign: TextAlign.center,
             ),
           ),
-          Material(
-            elevation: 5,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Divider(
-                  height: 0,
-                  color: ThemeUtils.borderColor,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: SwitchListTile.adaptive(
+            title: Text(" ${AppLocalizations.of(context)!.showOriginal}"),
+            activeColor: Theme.of(context).primaryColor,
+            value: controller.showOriginal,
+            onChanged: (value) => controller.showOriginal = value,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            if (controller.isEditing) ...[
+              TextButton(
+                onPressed: () {
+                  final String editedRecognizedWords =
+                      _recognizedWordsController.text;
+                  controller.editRecordingRecognizedWords(
+                    editedRecognizedWords,
+                  );
+                  controller.isEditing = false;
+                },
+                child: Text(AppLocalizations.of(context)!.save),
+              ),
+              TextButton(
+                onPressed: () {
+                  controller.isEditing = false;
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancel,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
-                Observer(
-                  builder: (context) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 13),
-                      child: AudioPlayerWidget(
-                        controller: controller.audioPlayerController,
-                      ),
-                    );
-                  },
+              ),
+            ] else
+              TextButton(
+                onPressed: () {
+                  _recognizedWordsController.text =
+                      controller.recordingModel!.editedRecognizedWords ??
+                          controller.recordingModel!.recognizedWords;
+                  controller.isEditing = true;
+                },
+                child: Text(AppLocalizations.of(context)!.editRecognizedWords),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _getRecognizedWordsWidget(BuildContext context) {
+    if (controller.isEditing) {
+      return Padding(
+        padding: const EdgeInsets.all(25),
+        child: TextFormField(
+          expands: true,
+          maxLines: null,
+          autofocus: true,
+          textAlign: TextAlign.start,
+          textAlignVertical: TextAlignVertical.top,
+          controller: _recognizedWordsController,
+          textCapitalization: TextCapitalization.sentences,
+          textInputAction: TextInputAction.newline,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+          ),
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(25),
+          child: SelectableText(
+            controller.showOriginal
+                ? controller.recordingModel!.recognizedWords
+                : (controller.recordingModel!.editedRecognizedWords ??
+                    controller.recordingModel!.recognizedWords),
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget _getAudioPlayerWidget(BuildContext context) {
+    return Material(
+      elevation: 5,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Divider(
+            height: 0,
+            color: ThemeUtils.borderColor,
+          ),
+          Observer(
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 13),
+                child: AudioPlayerWidget(
+                  controller: controller.audioPlayerController,
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

@@ -31,13 +31,15 @@ class RecordingModel extends Equatable {
 
   RecordingModel copyWith({
     String? name,
+    String? editedRecognizedWords,
   }) {
     return RecordingModel(
       name: name ?? this.name,
       date: date,
       path: path,
       recognizedWords: recognizedWords,
-      editedRecognizedWords: editedRecognizedWords,
+      editedRecognizedWords:
+          editedRecognizedWords ?? this.editedRecognizedWords,
     );
   }
 

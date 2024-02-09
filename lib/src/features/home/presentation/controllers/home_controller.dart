@@ -90,6 +90,16 @@ abstract class HomeControllerBase with Store {
   }
 
   @action
+  void editRecordingRecognizedWords(
+      RecordingModel recordingModel, String editedRecognizedWords) {
+    final int index = myRecordings.indexOf(recordingModel);
+    myRecordings[index] = recordingModel.copyWith(
+      editedRecognizedWords: editedRecognizedWords,
+    );
+    _service.saveMyRecordings(myRecordings);
+  }
+
+  @action
   void deleteRecording(RecordingModel recordingModel) {
     myRecordings.remove(recordingModel);
     deletedRecordings.add(recordingModel);

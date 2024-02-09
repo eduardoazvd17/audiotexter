@@ -35,5 +35,8 @@
     "recordingDetailsNullErrorMessage": "You must select a recording to view this details page",
     "renameRecording": "Rename recording",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "editRecognizedWords": "Edit recognized words",
+    "showOriginal": "Show original",
+    "showEdited": "Show edited"
 }

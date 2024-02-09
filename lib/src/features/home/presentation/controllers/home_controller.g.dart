@@ -146,6 +146,19 @@ mixin _$HomeController on HomeControllerBase, Store {
   }
 
   @override
+  void editRecordingRecognizedWords(
+      RecordingModel recordingModel, String editedRecognizedWords) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.editRecordingRecognizedWords');
+    try {
+      return super
+          .editRecordingRecognizedWords(recordingModel, editedRecognizedWords);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void deleteRecording(RecordingModel recordingModel) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
         name: 'HomeControllerBase.deleteRecording');
