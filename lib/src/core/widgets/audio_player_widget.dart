@@ -62,6 +62,7 @@ class AudioPlayerWidget extends StatelessWidget {
                             final bool isPlaying = snapshot.data ?? false;
                             return IconButton(
                               onPressed: () async {
+                                HapticFeedback.lightImpact();
                                 SystemSound.play(SystemSoundType.click);
                                 if (isPlaying) {
                                   await controller?.pause();
