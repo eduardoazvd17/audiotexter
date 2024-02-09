@@ -99,7 +99,7 @@ abstract class RecordingControllerBase with Store {
         await _speechToText.listen(
           localeId: GetIt.I
               .get<LocalizationController>()
-              ._selectedLocalization
+              .selectedLocalization
               .localeId,
           onResult: (result) {
             recognizedWordsListenerResult = result.recognizedWords;
@@ -149,10 +149,8 @@ abstract class RecordingControllerBase with Store {
       recognizedWordsListenerResult = "";
 
       await _speechToText.listen(
-        localeId: GetIt.I
-            .get<LocalizationController>()
-            ._selectedLocalization
-            .localeId,
+        localeId:
+            GetIt.I.get<LocalizationController>().selectedLocalization.localeId,
         onResult: (result) {
           recognizedWordsListenerResult = result.recognizedWords;
         },

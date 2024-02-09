@@ -55,7 +55,7 @@ class AudioTexterApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeUtils.lightTheme,
         darkTheme: ThemeUtils.darkTheme,
-        locale: localizationController._selectedLocalization.locale,
+        locale: localizationController.selectedLocalization.locale,
         localizationsDelegates: LocalizationUtils.localizationsDelegates,
         supportedLocales: LocalizationUtils.supportedLocales,
         initialRoute: HomePage.routeName,
