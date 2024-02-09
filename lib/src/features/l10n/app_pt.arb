@@ -1,3 +1,42 @@
 {
-    "appName": "AudioTexter"
+    "appName": "AudioTexter",
+    "myRecordings": "Minhas Gravações",
+    "deletedRecordings": "Gravações Excluídas",
+    "myRecordingsEmptyMessage": "Nenhuma gravação encontrada",
+    "deletedRecordingsEmptyMessage": "Nenhuma gravação excluída",
+    "recording": "Gravação",
+    "paused": "Pausado",
+    "stopAndSaveRecording": "Parar e salvar gravação",
+    "cancelRecording": "Cancelar gravação",
+    "newRecording": "Nova gravação",
+    "name": "Nome",
+    "noName": "Sem nome",
+    "deleteRecordingTitle": "Excluir gravação",
+    "deleteRecordingContent": "Você realmente deseja excluir a gravação: {title}?\n\nVocê pode restaurá-la depois na aba \"Gravações Excluídas\".",
+    "@deleteRecordingContent": {
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
+    "permanentDeleteRecordingContent": "Você realmente deseja excluir permanentemente a gravação: {title}?",
+    "@permanentDeleteRecordingContent": {
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
+    "deleteAllRecordingsTitle": "Excluir todas as gravações",
+    "deleteAllRecordingsContent": "Você realmente deseja excluir permanentemente todas as gravações?",
+    "yes": "Sim",
+    "no": "Não",
+    "recordingDetailsNullErrorMessage": "Você deve selecionar uma gravação para visualizar esta página de detalhes",
+    "renameRecording": "Renomear gravação",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "editRecognizedWords": "Editar palavras reconhecidas",
+    "showOriginalText": "Mostrar texto original",
+    "showEditedText": "Mostrar texto editado"
 }
