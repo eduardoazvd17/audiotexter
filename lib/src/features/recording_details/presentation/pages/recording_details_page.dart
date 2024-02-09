@@ -86,7 +86,9 @@ class RecordingDetailsPage extends StatelessWidget {
             title: Text(" ${AppLocalizations.of(context)!.showOriginal}"),
             activeColor: Theme.of(context).primaryColor,
             value: controller.showOriginal,
-            onChanged: (value) => controller.showOriginal = value,
+            onChanged: controller.isEditing
+                ? null
+                : (value) => controller.showOriginal = value,
           ),
         ),
         Row(
@@ -134,7 +136,7 @@ class RecordingDetailsPage extends StatelessWidget {
   Widget _getRecognizedWordsWidget(BuildContext context) {
     if (controller.isEditing) {
       return Padding(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(12.5),
         child: TextFormField(
           expands: true,
           maxLines: null,
