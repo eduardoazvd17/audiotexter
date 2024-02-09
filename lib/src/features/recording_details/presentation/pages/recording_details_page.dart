@@ -35,6 +35,7 @@ class RecordingDetailsPage extends StatelessWidget {
   Widget _recordingDetailsPageContent(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: controller.recordingModel!.name.isEmpty
             ? Opacity(
                 opacity: 0.25,
