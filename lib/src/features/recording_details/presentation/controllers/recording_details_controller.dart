@@ -38,6 +38,8 @@ abstract class RecordingDetailsControllerBase with Store {
   void deleteRecording() {
     if (recordingModel != null) {
       GetIt.I.get<HomeController>().deleteRecording(recordingModel!);
+      recordingModel = null;
+      audioPlayerController = null;
     }
   }
 }
