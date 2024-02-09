@@ -110,14 +110,14 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(25),
                 child: switch (controller.currentPage) {
-                  HomeViewsEnum.myRecordings => Icon(
-                      Icons.mic,
-                      size: 30,
+                  HomeViewsEnum.myRecordings => Image.asset(
+                      'assets/logo/logo-foreground.png',
+                      height: 35,
                       color: ThemeUtils.borderColor,
                     ).animate().fade(),
                   HomeViewsEnum.deletedRecordings => Icon(
                       Icons.delete_forever,
-                      size: 30,
+                      size: 35,
                       color: ThemeUtils.borderColor,
                     ).animate().fade(),
                 },
