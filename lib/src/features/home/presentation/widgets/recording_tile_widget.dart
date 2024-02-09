@@ -37,7 +37,10 @@ class RecordingTileWidget extends StatelessWidget {
               : Text(recordingModel.name),
           subtitle: Text(
             recordingModel.formattedDate(
-              GetIt.I.get<LocalizationController>().selectedLocalization.locale,
+              GetIt.I
+                  .get<LocalizationController>()
+                  .selectedLocalization
+                  .localeId,
             ),
           ),
           onTap: onOpen,

@@ -71,7 +71,10 @@ class RecordingDetailsPage extends StatelessWidget {
         Center(
           child: Text(
             controller.recordingModel!.formattedDate(
-              GetIt.I.get<LocalizationController>().selectedLocalization.locale,
+              GetIt.I
+                  .get<LocalizationController>()
+                  .selectedLocalization
+                  .localeId,
             ),
             style: Theme.of(context)
                 .textTheme
