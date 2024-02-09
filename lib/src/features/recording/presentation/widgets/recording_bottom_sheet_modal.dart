@@ -98,7 +98,7 @@ class RecordingBottomSheetModal extends StatelessWidget {
                           icon: Icon(
                             Icons.save,
                             size: 40,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                         IconButton(

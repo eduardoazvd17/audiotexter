@@ -113,7 +113,7 @@ class RecordingDetailsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             if (controller.isEditing) ...[
-              TextButton(
+              TextButton.icon(
                 onPressed: () {
                   final String editedRecognizedWords =
                       _recognizedWordsController.text;
@@ -122,13 +122,18 @@ class RecordingDetailsPage extends StatelessWidget {
                   );
                   controller.isEditing = false;
                 },
-                child: Text(AppLocalizations.of(context)!.save),
+                icon: const Icon(Icons.save),
+                label: Text(AppLocalizations.of(context)!.save),
               ),
-              TextButton(
+              TextButton.icon(
                 onPressed: () {
                   controller.isEditing = false;
                 },
-                child: Text(
+                icon: Icon(
+                  Icons.close,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+                label: Text(
                   AppLocalizations.of(context)!.cancel,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
@@ -136,14 +141,23 @@ class RecordingDetailsPage extends StatelessWidget {
                 ),
               ),
             ] else
-              TextButton(
+              TextButton.icon(
                 onPressed: () {
                   _recognizedWordsController.text =
                       controller.recordingModel!.editedRecognizedWords ??
                           controller.recordingModel!.recognizedWords;
                   controller.isEditing = true;
                 },
-                child: Text(AppLocalizations.of(context)!.editRecognizedWords),
+                icon: Icon(
+                  Icons.text_fields_sharp,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                label: Text(
+                  AppLocalizations.of(context)!.editRecognizedWords,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
               ),
           ],
         ),
