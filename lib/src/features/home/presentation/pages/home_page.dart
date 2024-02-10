@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(25),
                 child: switch (controller.currentPage) {
                   HomeViewsEnum.myRecordings => Image.asset(
-                      'assets/logo/logo-foreground.png',
+                      'assets/logo/logo.png',
                       height: 35,
                       color: ThemeUtils.borderColor,
                     ).animate().fade(),
