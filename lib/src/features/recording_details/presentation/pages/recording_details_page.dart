@@ -12,9 +12,16 @@ import '../../../../core/widgets/empty_list_widget.dart';
 
 class RecordingDetailsPage extends StatelessWidget {
   final RecordingDetailsController controller;
-  final TextEditingController _recognizedWordsController;
-  RecordingDetailsPage({super.key, required this.controller})
-      : _recognizedWordsController = TextEditingController();
+  late final TextEditingController _recognizedWordsController;
+
+  RecordingDetailsPage({
+    super.key,
+    required RecordingModel? recordingModel,
+    required this.controller,
+  }) {
+    _recognizedWordsController = TextEditingController();
+    controller.init(recordingModel);
+  }
 
   static const String routeName = "/details";
 

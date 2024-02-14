@@ -1,3 +1,4 @@
+import 'package:audiotexter/src/core/models/recording_model.dart';
 import 'package:audiotexter/src/core/utils/localization_utils.dart';
 import 'package:audiotexter/src/features/home/data/services/home_service.dart';
 import 'package:audiotexter/src/features/home/presentation/controllers/home_controller.dart';
@@ -63,8 +64,10 @@ class AudioTexterApp extends StatelessWidget {
               controller: GetIt.I.get<HomeController>(),
             );
           },
-          RecordingDetailsPage.routeName: (_) {
+          RecordingDetailsPage.routeName: (context) {
             return RecordingDetailsPage(
+              recordingModel:
+                  ModalRoute.of(context)?.settings.arguments as RecordingModel?,
               controller: GetIt.I.get<RecordingDetailsController>(),
             );
           },
