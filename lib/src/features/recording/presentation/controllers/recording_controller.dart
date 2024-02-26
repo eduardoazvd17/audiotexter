@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audiotexter/src/features/recording/data/speech_to_text_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
@@ -16,11 +17,16 @@ class RecordingController = RecordingControllerBase with _$RecordingController;
 abstract class RecordingControllerBase with Store {
   late final TextEditingController nameController;
   late final AudioRecorder _recorder;
+  late final SpeechToTextService _speechToTextService;
   late final String audiosDirectoryPath;
 
-  RecordingControllerBase({required AudioRecorder audioRecordinger}) {
+  RecordingControllerBase({
+    required AudioRecorder audioRecordinger,
+    required SpeechToTextService speechToTextService,
+  }) {
     nameController = TextEditingController();
     _recorder = audioRecordinger;
+    _speechToTextService = speechToTextService;
     _checkPermissions();
     _loadAudiosDirectoryPath();
   }
@@ -75,9 +81,9 @@ abstract class RecordingControllerBase with Store {
       if (!isRecording) {
         nameController.text = title ?? "New recording";
         _durationInSeconds = 0;
+
         final String audioPath =
             "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
-
         await _recorder.start(const RecordConfig(), path: audioPath);
 
         _timer = Timer.periodic(
@@ -136,11 +142,13 @@ abstract class RecordingControllerBase with Store {
 
       RecordingModel? recordingModel;
       if (audioPath != null && audioPath.isNotEmpty) {
+        final String transcribeResult =
+            await _speechToTextService.transcribe(audioPath);
         recordingModel = RecordingModel(
           name: nameController.text,
           date: DateTime.now().subtract(duration),
           path: audioPath,
-          recognizedWords: '',
+          recognizedWords: transcribeResult,
         );
       }
 

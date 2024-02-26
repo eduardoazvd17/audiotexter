@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:record/record.dart';
 import 'src/core/utils/theme_utils.dart';
 import 'src/features/home/presentation/pages/home_page.dart';
+import 'src/features/recording/data/speech_to_text_service.dart';
 import 'src/features/recording/presentation/controllers/recording_controller.dart';
 import 'src/features/recording_details/presentation/pages/recording_details_page.dart';
 
@@ -22,6 +23,7 @@ void main() async {
 }
 
 void _loadDependencies() {
+  GetIt.I.registerSingleton(SpeechToTextService());
   GetIt.I.registerSingleton(
     LocalizationController(
       service: LocalizationService(),
@@ -30,6 +32,7 @@ void _loadDependencies() {
   GetIt.I.registerSingleton(
     RecordingController(
       audioRecordinger: AudioRecorder(),
+      speechToTextService: GetIt.I.get<SpeechToTextService>(),
     ),
   );
   GetIt.I.registerFactory(() => HomeService());
