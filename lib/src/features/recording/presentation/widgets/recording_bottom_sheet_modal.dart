@@ -59,7 +59,7 @@ class RecordingBottomSheetModal extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 100),
+                      const SizedBox(height: 140),
                       Padding(
                         padding: const EdgeInsets.all(25),
                         child: TextFormField(
@@ -131,12 +131,17 @@ class RecordingBottomSheetModal extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: -100,
+                  top: -70,
                   right: 0,
                   left: 0,
                   child: IgnorePointer(
                     ignoring: true,
-                    child: Lottie.asset('assets/animations/audiowave.json'),
+                    child: Observer(
+                      builder: (context) => Lottie.asset(
+                        'assets/animations/audiowave.json',
+                        animate: controller.isRecording && !controller.isPaused,
+                      ),
+                    ),
                   ),
                 ),
               ],

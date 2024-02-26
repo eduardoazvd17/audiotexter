@@ -27,10 +27,6 @@ class RecordingDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.init(
-      ModalRoute.of(context)?.settings.arguments as RecordingModel?,
-    );
-
     return Observer(
       builder: (context) {
         if (controller.recordingModel != null) {
