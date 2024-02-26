@@ -171,19 +171,21 @@ abstract class RecordingControllerBase with Store {
 
   Future<String?> _compressAudio(String? audioPath) async {
     try {
-      final String compressedAudioPath =
-          audioPath!.replaceAll('.wav', '-compressed.wav');
-      final String command =
-          '-y -i $audioPath -ac 1 -f ogg -b:a 128k $compressedAudioPath';
+      return audioPath;
 
-      final result = await FFmpegKit.execute(command);
-      final resultCode = await result.getReturnCode();
-      if (resultCode?.getValue() == ReturnCode.success) {
-        await File(audioPath).delete();
-        return compressedAudioPath;
-      } else {
-        return null;
-      }
+      // final String compressedAudioPath =
+      //     audioPath!.replaceAll('.wav', '-compressed.wav');
+      // final String command =
+      //     '-y -i $audioPath -ac 1 -f ogg -b:a 128k $compressedAudioPath';
+
+      // final result = await FFmpegKit.execute(command);
+      // final resultCode = await result.getReturnCode();
+      // if (resultCode?.getValue() == ReturnCode.success) {
+      //   await File(audioPath).delete();
+      //   return compressedAudioPath;
+      // } else {
+      //   return null;
+      // }
     } catch (_) {
       return null;
     }
