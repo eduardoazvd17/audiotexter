@@ -12,6 +12,8 @@ class RecordingModel extends Equatable {
   final String recognizedWords;
   final String? editedRecognizedWords;
 
+  String get confidenceLevelPercentage => "${(confidenceLevel * 100).toInt()}%";
+
   String formattedDate(String localeId) {
     final String hour = date.hour.toString().padLeft(2, "0");
     final String minute = date.minute.toString().padLeft(2, "0");
