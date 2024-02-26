@@ -120,40 +120,6 @@ mixin _$RecordingController on RecordingControllerBase, Store {
     });
   }
 
-  late final _$recognizedWordsAtom =
-      Atom(name: 'RecordingControllerBase.recognizedWords', context: context);
-
-  @override
-  String get recognizedWords {
-    _$recognizedWordsAtom.reportRead();
-    return super.recognizedWords;
-  }
-
-  @override
-  set recognizedWords(String value) {
-    _$recognizedWordsAtom.reportWrite(value, super.recognizedWords, () {
-      super.recognizedWords = value;
-    });
-  }
-
-  late final _$recognizedWordsListenerResultAtom = Atom(
-      name: 'RecordingControllerBase.recognizedWordsListenerResult',
-      context: context);
-
-  @override
-  String get recognizedWordsListenerResult {
-    _$recognizedWordsListenerResultAtom.reportRead();
-    return super.recognizedWordsListenerResult;
-  }
-
-  @override
-  set recognizedWordsListenerResult(String value) {
-    _$recognizedWordsListenerResultAtom
-        .reportWrite(value, super.recognizedWordsListenerResult, () {
-      super.recognizedWordsListenerResult = value;
-    });
-  }
-
   late final _$_checkPermissionsAsyncAction = AsyncAction(
       'RecordingControllerBase._checkPermissions',
       context: context);
@@ -213,8 +179,6 @@ isLoading: ${isLoading},
 hasPermission: ${hasPermission},
 isRecording: ${isRecording},
 isPaused: ${isPaused},
-recognizedWords: ${recognizedWords},
-recognizedWordsListenerResult: ${recognizedWordsListenerResult},
 duration: ${duration},
 timerString: ${timerString}
     ''';

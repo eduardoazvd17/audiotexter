@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   record: ^5.0.4
   just_audio: ^0.9.36
-  speech_to_text: ^6.6.0
   google_nav_bar: ^5.0.6
   mobx: ^2.3.0+1
   flutter_mobx: ^2.2.0+2
