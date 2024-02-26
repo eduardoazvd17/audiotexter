@@ -118,6 +118,10 @@ class RecordingDetailsPage extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 5),
+        Text(
+          '${AppLocalizations.of(context)!.averageConfidenceLevel}: ${controller.recordingModel!.confidenceLevel}',
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

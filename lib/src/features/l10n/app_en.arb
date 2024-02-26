@@ -42,5 +42,6 @@
     "autoDetect": "Auto detect",
     "english": "English",
     "portuguese": "Portuguese",
-    "spanish": "Spanish"
+    "spanish": "Spanish",
+    "averageConfidenceLevel": "Average confidence level"
 }

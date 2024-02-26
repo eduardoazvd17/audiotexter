@@ -8,6 +8,7 @@ class RecordingModel extends Equatable {
   final String name;
   final DateTime date;
   final String path;
+  final double confidenceLevel;
   final String recognizedWords;
   final String? editedRecognizedWords;
 
@@ -25,6 +26,7 @@ class RecordingModel extends Equatable {
     required this.name,
     required this.date,
     required this.path,
+    required this.confidenceLevel,
     required this.recognizedWords,
     this.editedRecognizedWords,
   });
@@ -37,6 +39,7 @@ class RecordingModel extends Equatable {
       name: name ?? this.name,
       date: date,
       path: path,
+      confidenceLevel: confidenceLevel,
       recognizedWords: recognizedWords,
       editedRecognizedWords:
           editedRecognizedWords ?? this.editedRecognizedWords,
@@ -48,6 +51,7 @@ class RecordingModel extends Equatable {
       name: map['name'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       path: map['path'],
+      confidenceLevel: map['confidenceLevel'],
       recognizedWords: map['recognizedWords'],
       editedRecognizedWords: map['editedRecognizedWords'],
     );
@@ -58,6 +62,7 @@ class RecordingModel extends Equatable {
       'name': name,
       'date': date.millisecondsSinceEpoch,
       'path': path,
+      'confidenceLevel': confidenceLevel,
       'recognizedWords': recognizedWords,
       'editedRecognizedWords': editedRecognizedWords,
     };
@@ -68,6 +73,7 @@ class RecordingModel extends Equatable {
         name,
         date,
         path,
+        confidenceLevel,
         recognizedWords,
         editedRecognizedWords,
       ];

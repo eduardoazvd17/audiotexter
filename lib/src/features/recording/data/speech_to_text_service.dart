@@ -16,7 +16,7 @@ class SpeechToTextService {
     _loadCredentials();
   }
 
-  Future<String> transcribe(String audioPath) async {
+  Future<(double, String)> transcribe(String audioPath) async {
     try {
       final String model =
           _getLocaleParam(_localizationController.selectedLocalization);
@@ -36,13 +36,14 @@ class SpeechToTextService {
 
       final responseMap = Map<String, dynamic>.from(jsonDecode(response.body));
 
+      final List<double> confidences = [];
       String transcribedText = '';
       final results = List<Map<String, dynamic>>.from(responseMap['results']);
       for (final Map<String, dynamic> result in results) {
         final alternatives =
             List<Map<String, dynamic>>.from(result['alternatives']);
         for (final Map<String, dynamic> alternative in alternatives) {
-          //final double confidence = alternative['confidence'];
+          confidences.add(alternative['confidence']);
           String transcript = alternative['transcript'];
           transcript = transcript.replaceFirst(
             transcript[0],
@@ -52,9 +53,11 @@ class SpeechToTextService {
         }
       }
 
-      return transcribedText;
+      final double averageConfidence =
+          confidences.reduce((a, b) => a + b) / confidences.length;
+      return (averageConfidence, transcribedText);
     } catch (_) {
-      return "Error: $_";
+      return (-1.0, "Error: $_");
     }
   }
 

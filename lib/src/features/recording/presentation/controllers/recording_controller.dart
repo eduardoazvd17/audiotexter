@@ -144,12 +144,14 @@ abstract class RecordingControllerBase with Store {
       final String? audioPath = await _compressAudio(await _recorder.stop());
       RecordingModel? recordingModel;
       if (audioPath != null && audioPath.isNotEmpty) {
-        final String transcribeResult =
+        final (double confidenceLevel, String transcribeResult) =
             await _speechToTextService.transcribe(audioPath);
+
         recordingModel = RecordingModel(
           name: nameController.text,
           date: DateTime.now().subtract(duration),
           path: audioPath,
+          confidenceLevel: confidenceLevel,
           recognizedWords: transcribeResult,
         );
       }
