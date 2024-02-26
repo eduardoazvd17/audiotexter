@@ -32,6 +32,7 @@ class SpeechToTextService {
         headers: {
           'Authorization': 'Basic $auth',
           'Content-Type': 'audio/wav',
+          'Accept': 'application/json;charset=utf-8',
         },
         body: await File(audioPath).readAsBytes(),
       );
