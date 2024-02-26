@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audiotexter/src/features/recording/data/speech_to_text_service.dart';
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
@@ -170,24 +168,23 @@ abstract class RecordingControllerBase with Store {
   }
 
   Future<String?> _compressAudio(String? audioPath) async {
-    try {
-      return audioPath;
+    return audioPath;
+    // try {
+    //   final String compressedAudioPath =
+    //       audioPath!.replaceAll('.wav', '-compressed.wav');
+    //   final String command =
+    //       '-y -i $audioPath -ac 1 -f ogg -b:a 128k $compressedAudioPath';
 
-      // final String compressedAudioPath =
-      //     audioPath!.replaceAll('.wav', '-compressed.wav');
-      // final String command =
-      //     '-y -i $audioPath -ac 1 -f ogg -b:a 128k $compressedAudioPath';
-
-      // final result = await FFmpegKit.execute(command);
-      // final resultCode = await result.getReturnCode();
-      // if (resultCode?.getValue() == ReturnCode.success) {
-      //   await File(audioPath).delete();
-      //   return compressedAudioPath;
-      // } else {
-      //   return null;
-      // }
-    } catch (_) {
-      return null;
-    }
+    //   final result = await FFmpegKit.execute(command);
+    //   final resultCode = await result.getReturnCode();
+    //   if (resultCode?.getValue() == ReturnCode.success) {
+    //     await File(audioPath).delete();
+    //     return compressedAudioPath;
+    //   } else {
+    //     return null;
+    //   }
+    // } catch (_) {
+    //   return null;
+    // }
   }
 }
