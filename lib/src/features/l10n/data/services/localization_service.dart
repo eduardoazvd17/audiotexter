@@ -1,4 +1,4 @@
-import 'package:audiotexter/src/features/l10n/data/enums/supported_languages.dart';
+import 'package:audiotexter/src/features/l10n/data/enums/localization_enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationService {

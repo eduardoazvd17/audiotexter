@@ -23,10 +23,12 @@ void main() async {
 }
 
 void _loadDependencies() {
-  GetIt.I.registerSingleton(SpeechToTextService());
   GetIt.I.registerSingleton(
-    LocalizationController(
-      service: LocalizationService(),
+    LocalizationController(service: LocalizationService()),
+  );
+  GetIt.I.registerSingleton(
+    SpeechToTextService(
+      localizationController: GetIt.I.get<LocalizationController>(),
     ),
   );
   GetIt.I.registerSingleton(

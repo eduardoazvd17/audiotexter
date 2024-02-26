@@ -9,7 +9,7 @@ enum LocalizationEnum {
   spanish,
 }
 
-extension SupportedLanguagesExtension on LocalizationEnum {
+extension LocalizationEnumExtension on LocalizationEnum {
   Widget get icon {
     return switch (this) {
       LocalizationEnum.autoDetect => const Icon(CupertinoIcons.globe),
