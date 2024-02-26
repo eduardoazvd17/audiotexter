@@ -18,26 +18,41 @@ class SpeechToTextService {
 
   Future<String> transcribe(String audioPath) async {
     try {
-      final String model = _getLocaleParam(
-        _localizationController.selectedLocalization,
-      );
+      final String model =
+          _getLocaleParam(_localizationController.selectedLocalization);
       final Uri url =
           Uri.parse(_credentials!["endpoint"] + '/v1/recognize?model=$model');
-      final String auth = base64Encode(
-        utf8.encode('apikey:${_credentials["apikey"]}'),
-      );
+      final String auth =
+          base64Encode(utf8.encode('apikey:${_credentials["apikey"]}'));
 
       final http.Response response = await http.post(
         url,
         headers: {
           'Authorization': 'Basic $auth',
           'Content-Type': 'audio/wav',
-          'Accept': 'application/json;charset=utf-8',
         },
         body: await File(audioPath).readAsBytes(),
       );
 
-      return response.body;
+      final responseMap = Map<String, dynamic>.from(jsonDecode(response.body));
+
+      String transcribedText = '';
+      final results = List<Map<String, dynamic>>.from(responseMap['results']);
+      for (final Map<String, dynamic> result in results) {
+        final alternatives =
+            List<Map<String, dynamic>>.from(result['alternatives']);
+        for (final Map<String, dynamic> alternative in alternatives) {
+          //final double confidence = alternative['confidence'];
+          String transcript = alternative['transcript'];
+          transcript = transcript.replaceFirst(
+            transcript[0],
+            transcript[0].toUpperCase(),
+          );
+          transcribedText += '${transcript.trim()}.\n';
+        }
+      }
+
+      return transcribedText;
     } catch (_) {
       return "Error: $_";
     }
