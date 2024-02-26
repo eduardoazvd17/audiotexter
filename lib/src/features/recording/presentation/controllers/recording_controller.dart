@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audiotexter/src/features/recording/data/speech_to_text_service.dart';
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
@@ -83,8 +85,11 @@ abstract class RecordingControllerBase with Store {
         _durationInSeconds = 0;
 
         final String audioPath =
-            "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.m4a";
-        await _recorder.start(const RecordConfig(), path: audioPath);
+            "$audiosDirectoryPath/${DateTime.now().millisecondsSinceEpoch}.wav";
+        await _recorder.start(
+          const RecordConfig(encoder: AudioEncoder.wav),
+          path: audioPath,
+        );
 
         _timer = Timer.periodic(
           const Duration(seconds: 1),
@@ -138,8 +143,7 @@ abstract class RecordingControllerBase with Store {
     if (isRecording) {
       isLoading = true;
 
-      final String? audioPath = await _recorder.stop();
-
+      final String? audioPath = await _compressAudio(await _recorder.stop());
       RecordingModel? recordingModel;
       if (audioPath != null && audioPath.isNotEmpty) {
         final String transcribeResult =
@@ -163,5 +167,25 @@ abstract class RecordingControllerBase with Store {
       return recordingModel;
     }
     return null;
+  }
+
+  Future<String?> _compressAudio(String? audioPath) async {
+    try {
+      final String compressedAudioPath =
+          audioPath!.replaceAll('.wav', '-compressed.wav');
+      final String command =
+          '-y -i $audioPath -ac 1 -f ogg -b:a 128k $compressedAudioPath';
+
+      final result = await FFmpegKit.execute(command);
+      final resultCode = await result.getReturnCode();
+      if (resultCode?.getValue() == ReturnCode.success) {
+        await File(audioPath).delete();
+        return compressedAudioPath;
+      } else {
+        return null;
+      }
+    } catch (_) {
+      return null;
+    }
   }
 }

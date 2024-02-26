@@ -10,10 +10,7 @@ class SpeechToTextService {
     _loadCredentials();
   }
 
-  Future<String> transcribe(
-    String audioPath, {
-    int rate = 44100,
-  }) async {
+  Future<String> transcribe(String audioPath) async {
     try {
       final Uri url = Uri.parse(_credentials!["endpoint"] + '/v1/recognize');
       final String auth = base64Encode(
@@ -24,7 +21,7 @@ class SpeechToTextService {
         url,
         headers: {
           'Authorization': 'Basic $auth',
-          'Content-Type': 'audio/l16;rate=$rate',
+          'Content-Type': 'audio/wav',
         },
         body: await File(audioPath).readAsBytes(),
       );

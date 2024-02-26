@@ -51,6 +51,7 @@ dependencies:
   flutter_native_splash: ^2.3.10
   lottie: ^3.0.0
   http: ^1.2.1
+  ffmpeg_kit_flutter: ^6.0.3
 
 dev_dependencies:
   flutter_test:
