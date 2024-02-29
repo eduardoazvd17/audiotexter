@@ -137,9 +137,16 @@ class RecordingBottomSheetModal extends StatelessWidget {
                   child: IgnorePointer(
                     ignoring: true,
                     child: Observer(
-                      builder: (context) => Lottie.asset(
-                        'assets/animations/audiowave.json',
-                        animate: controller.isRecording && !controller.isPaused,
+                      builder: (context) => ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).primaryColor,
+                          BlendMode.srcIn,
+                        ),
+                        child: Lottie.asset(
+                          'assets/animations/audiowave.json',
+                          animate:
+                              controller.isRecording && !controller.isPaused,
+                        ),
                       ),
                     ),
                   ),
